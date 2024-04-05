@@ -1,0 +1,83 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Ubuntu',sans-serif;
+}
+
+.box {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.our-services {
+  margin-top: 75px;
+  padding-bottom: 30px;
+  padding: 0 60px;
+  min-height: 198px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #fff;
+  transition: all .4s ease-in-out;
+  box-shadow: 0 0 25px 0 rgba(20,27,202,.17);
+}
+
+.our-services .icon {
+  margin-bottom: -21px;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+.our-services:hover h4, .our-services:hover p {
+  color: #fff;
+}
+
+.privateChat:hover {
+  box-shadow: 0 0 25px 0 rgba(20,27,201,.05);
+  cursor: pointer;
+  background-image: linear-gradient(-45deg, #fb0054 0%, #f55b2a 100%);
+}
+
+.chatList:hover {
+  box-shadow: 0 0 25px 0 rgba(20,27,201,.05);
+  cursor: pointer;
+  background-image: linear-gradient(-45deg, #34b5bf 0%, #210c59 100%);
+}
+
+.gpsLocation:hover {
+  box-shadow: 0 0 25px 0 rgba(20,27,201,.05);
+  cursor: pointer;
+  background-image: linear-gradient(-45deg, #3615e7 0%, #44a2f6 100%);
+}
+
+.blockedContact:hover {
+  box-shadow: 0 0 25px 0 rgba(20,27,201,.05);
+  cursor: pointer;
+  background-image: linear-gradient(-45deg, #fc6a0e 0%, #fdb642 100%);
+}
+
+.groupList:hover {
+  box-shadow: 0 0 25px 0 rgba(20,27,201,.05);
+  cursor: pointer;
+  background-image: linear-gradient(-45deg, #8d40fb 0%, #5a57fb 100%);
+}
+
+.groupChat:hover {
+  box-shadow: 0 0 25px 0 rgba(20,27,201,.05);
+  cursor: pointer;
+  background-image: linear-gradient(-45deg, #27b88d 0%, #22dd73 100%);
+}
+
+a.service {
+  text-decoration: none;
+  color: inherit;
+}
+
+div {
+}
+

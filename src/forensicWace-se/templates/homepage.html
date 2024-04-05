@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Forensic Wace</title>
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="../assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../assets/css/--mp---Masonry-Gallery-with-Loader-styles.css">
+    <link rel="stylesheet" href="../assets/css/Features-Cards-icons.css">
+    <link rel="stylesheet" href="../assets/css/Forensic_WACE.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
+</head>
+
+<body style="background: #f8f9fc;">
+    <nav class="navbar navbar-light navbar-expand-md" style="width: 100%;">
+        <div class="container-fluid">
+            <img src="../assets/img/Logo.png" style="height: 45px;">
+            <a class="btn btn-danger btn-icon-split" role="button" href="/Exit"><span class="text-white-50 icon"><i class="fas fa-sign-out-alt"></i></span><span class="text-white text">EXIT</span></a>
+        </div>
+    </nav>
+    <hr style="margin-top: 7px;margin-bottom: 13px;">
+    <div class="d-flex flex-column" id="content-wrapper-1">
+        <div class="row" style="margin-right: calc(var(--bs-gutter-x) * .5);margin-left: calc(var(--bs-gutter-x) * .5);margin-bottom: calc(var(--bs-gutter-x) * .5);;">
+            <div class="col-xxl-5">
+                <div class="card shadow border-start-primary py-2">
+                    <div class="card-body">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col me-2">
+                                <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Device UDID</span></div>
+                                <div class="text-dark fw-bold h5 mb-0"><span>{{ udid }}</span></div>
+                            </div>
+                            <div class="col-auto"><a class="btn btn-primary btn-circle ms-1" role="button"><i class="fas fa-mobile-alt text-white"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-5">
+                <div class="card shadow border-start-primary py-2">
+                    <div class="card-body">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col me-2">
+                                <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Device name</span></div>
+                                <div class="text-dark fw-bold h5 mb-0"><span>{{ name }}</span></div>
+                            </div>
+                            <div class="col-auto"><a class="btn btn-primary btn-circle ms-1" role="button"><i class="fas fa-mobile-alt text-white"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-2">
+                <div class="card shadow border-start-success py-2">
+                    <div class="card-body">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col me-2">
+                                <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span><strong>IOS VERSION</strong><br></span></div>
+                                <div class="text-dark fw-bold h5 mb-0"><span>{{ ios }}</span></div>
+                            </div>
+                            <div class="col-auto"><a class="btn btn-primary btn-circle ms-1" role="button"><i class="fas fa-mobile-alt text-white"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row d-xxl-flex" style="margin-right: calc(var(--bs-gutter-x) * .5);;margin-left: calc(var(--bs-gutter-x) * .5);">
+            <div class="col">
+                <div class="card shadow border-start-success py-2">
+                    <div class="card-body">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col me-2">
+                                <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Database SHA256 HASH</span></div>
+                                <div class="text-dark fw-bold h5 mb-0"><span style="font-size: 14px" class=".SHA256">{{ databaseSHA256 }}</span></div>
+                            </div>
+                            <div class="col-auto"><a class="btn btn-success btn-circle ms-1" role="button" ><i class="fas fa-database text-white"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card shadow border-start-success py-2">
+                    <div class="card-body">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col me-2">
+                                <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Database MD5 HASH</span></div>
+                                <div class="text-dark fw-bold h5 mb-0"><span style="font-size: 14px">{{ databaseMD5 }}</span></div>
+                            </div>
+                            <div class="col-auto"><a class="btn btn-success btn-circle ms-1" role="button"><i class="fas fa-database text-white"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-2">
+                <div class="card shadow border-start-success py-2">
+                    <div class="card-body">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col me-2">
+                                <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Database Size</span></div>
+                                <div class="text-dark fw-bold h5 mb-0"><span>{{ databaseSize }} MB</span></div>
+                            </div>
+                            <div class="col-auto"><a class="btn btn-success btn-circle ms-1" role="button"><i class="fas fa-database text-white"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><div class="container-fluid mb-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box">
+                <a href="#" class="service">
+                    <div class="our-services chatList">
+                        <div class="icon"> <img src="../assets/img/homepage/Service1.png"> </div>
+                        <h4>Chat List</h4>
+                        <p>This function allows you to extract the list of all conversations that have occurred with other users</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box">
+                <a href="#" class="service">
+                    <div class="our-services privateChat">
+                        <div class="icon"> <img src="../assets/img/homepage/Service2.png"> </div>
+                        <h4>Private chat</h4>
+                        <p>This function allows you to extract the entire conversation that occurred between two people</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box">
+                <a href="#" class="service">
+                    <div class="our-services gpsLocation">
+                        <div class="icon"> <img src="../assets/img/homepage/Service3.png"> </div>
+                        <h4>GPS locations</h4>
+                        <p>This function allows you to extract the list of gps coordinates exchanged between users</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box">
+                <a href="#" class="service">
+                    <div class="our-services blockedContact">
+                        <div class="icon"> <img src="../assets/img/homepage/Service4.png"> </div>
+                        <h4>Blocked contacts</h4>
+                        <p>This function allows you to extract the list of contacts blocked by the user</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box">
+                <a href="#" class="service">
+                    <div class="our-services groupList">
+                        <div class="icon"> <img src="../assets/img/homepage/Service5.png"> </div>
+                        <h4>Group List</h4>
+                        <p>This feature allows you to extract the list of groups in which the database owner belongs</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box">
+                <a href="#" class="service">
+                    <div class="our-services groupChat">
+                        <div class="icon"> <img src="../assets/img/homepage/Service6.png"> </div>
+                        <h4>Group chat</h4>
+                        <p>This feature allows you to extract a group conversation</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

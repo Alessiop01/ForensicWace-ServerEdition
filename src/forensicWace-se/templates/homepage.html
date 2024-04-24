@@ -15,12 +15,7 @@
 </head>
 
 <body style="background: #f8f9fc;">
-    <nav class="navbar navbar-light navbar-expand-md" style="width: 100%;">
-        <div class="container-fluid">
-            <img src="../assets/img/Logo.png" style="height: 45px;">
-            <a class="btn btn-danger btn-icon-split" role="button" href="/Exit"><span class="text-white-50 icon"><i class="fas fa-sign-out-alt"></i></span><span class="text-white text">EXIT</span></a>
-        </div>
-    </nav>
+    {% include "navbar.html" %}
     <hr style="margin-top: 7px;margin-bottom: 13px;">
     <div class="d-flex flex-column" id="content-wrapper-1">
         <div class="row" style="margin-right: calc(var(--bs-gutter-x) * .5);margin-left: calc(var(--bs-gutter-x) * .5);margin-bottom: calc(var(--bs-gutter-x) * .5);;">
@@ -105,78 +100,80 @@
                 </div>
             </div>
         </div>
-    </div><div class="container-fluid mb-5">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="box">
-                <a href="#" class="service">
-                    <div class="our-services chatList">
-                        <div class="icon"> <img src="../assets/img/homepage/Service1.png"> </div>
-                        <h4>Chat List</h4>
-                        <p>This function allows you to extract the list of all conversations that have occurred with other users</p>
-                    </div>
-                </a>
+    </div>
+    <div class="container-fluid mb-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="box">
+                    <a href="/ChatList" class="service">
+                        <div class="our-services chatList">
+                            <div class="icon"> <img src="../assets/img/homepage/Service1.png"> </div>
+                            <h4>Chat List</h4>
+                            <p>This function allows you to extract the list of all conversations that have occurred with other users</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box">
+                    <a href="/InsertPhoneNumber" class="service">
+                        <div class="our-services privateChat">
+                            <div class="icon"> <img src="../assets/img/homepage/Service2.png"> </div>
+                            <h4>Private chat</h4>
+                            <p>This function allows you to extract the entire conversation that occurred between two people</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box">
+                    <a href="/GpsLocations" class="service">
+                        <div class="our-services gpsLocation">
+                            <div class="icon"> <img src="../assets/img/homepage/Service3.png"> </div>
+                            <h4>GPS locations</h4>
+                            <p>This function allows you to extract the list of gps coordinates exchanged between users</p>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="box">
-                <a href="#" class="service">
-                    <div class="our-services privateChat">
-                        <div class="icon"> <img src="../assets/img/homepage/Service2.png"> </div>
-                        <h4>Private chat</h4>
-                        <p>This function allows you to extract the entire conversation that occurred between two people</p>
-                    </div>
-                </a>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="box">
+                    <a href="/BlockedContacts" class="service">
+                        <div class="our-services blockedContact">
+                            <div class="icon"> <img src="../assets/img/homepage/Service4.png"> </div>
+                            <h4>Blocked contacts</h4>
+                            <p>This function allows you to extract the list of contacts blocked by the user</p>
+                        </div>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="box">
-                <a href="#" class="service">
-                    <div class="our-services gpsLocation">
-                        <div class="icon"> <img src="../assets/img/homepage/Service3.png"> </div>
-                        <h4>GPS locations</h4>
-                        <p>This function allows you to extract the list of gps coordinates exchanged between users</p>
-                    </div>
-                </a>
+            <div class="col-md-4">
+                <div class="box">
+                    <a href="/GroupList" class="service">
+                        <div class="our-services groupList">
+                            <div class="icon"> <img src="../assets/img/homepage/Service5.png"> </div>
+                            <h4>Group List</h4>
+                            <p>This feature allows you to extract the list of groups in which the database owner belongs</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box">
+                    <a href="/SelectGroup" class="service">
+                        <div class="our-services groupChat">
+                            <div class="icon"> <img src="../assets/img/homepage/Service6.png"> </div>
+                            <h4>Group chat</h4>
+                            <p>This feature allows you to extract a group conversation</p>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="box">
-                <a href="#" class="service">
-                    <div class="our-services blockedContact">
-                        <div class="icon"> <img src="../assets/img/homepage/Service4.png"> </div>
-                        <h4>Blocked contacts</h4>
-                        <p>This function allows you to extract the list of contacts blocked by the user</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="box">
-                <a href="#" class="service">
-                    <div class="our-services groupList">
-                        <div class="icon"> <img src="../assets/img/homepage/Service5.png"> </div>
-                        <h4>Group List</h4>
-                        <p>This feature allows you to extract the list of groups in which the database owner belongs</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="box">
-                <a href="#" class="service">
-                    <div class="our-services groupChat">
-                        <div class="icon"> <img src="../assets/img/homepage/Service6.png"> </div>
-                        <h4>Group chat</h4>
-                        <p>This feature allows you to extract a group conversation</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+    {% include "footer.html" %}
 </body>
 
 </html>

@@ -1,10 +1,11 @@
 import plistlib
 import os
+import sqlite3
 
 import utils
+import globalConstants
 
-#region Data Types
-
+# Backup info file names
 iosInfoFiles = {
     'manifest': 'Manifest.plist',
     'manifestDB': 'Manifest.db',
@@ -12,10 +13,16 @@ iosInfoFiles = {
     'status': 'Status.plist'
 }
 
-#endregion
-
 def GetDeviceExtractionList(deviceExtractionPath):
-
+    """Gets the list of all devices backup extraction available in the system.
+    The base folder is taken as input parameter.
+    Returns a list of object of type device base info such as:
+    - Udid
+    - Device name
+    - Device ios version
+    - Device serial number
+    - Device type
+    - Backup date and time"""
     toReturnList = []
 
     if deviceExtractionPath:
@@ -30,17 +37,19 @@ def GetDeviceExtractionList(deviceExtractionPath):
         raise Exception("Need valid backup root folder path passed through 'deviceExtractionPath'.")
 
 def GetDeviceBasicInfo(udid, path):
-
+    """Gets the basic device information from the manifest file for a specific device Udid.
+    Returns an object containing the basic device informations.
+    If the manifest file is not found, an empty object is returned."""
     if udid and path:
         manifestFile = os.path.join(path, udid, iosInfoFiles['manifest'])
-        info = {}
+        deviceBasicInfo = {}
         try:
             with open(manifestFile, 'rb') as infile:
                 manifest = plistlib.load(infile)
         except FileNotFoundError:
             print(f"{udid} under {path} doesn't seem to have a manifest file.")
             return None
-        info = {
+        deviceBasicInfo = {
             "udid": udid,
             "name": manifest['Lockdown']['DeviceName'],
             "ios": manifest['Lockdown']['ProductVersion'],
@@ -51,4 +60,135 @@ def GetDeviceBasicInfo(udid, path):
     else:
         raise Exception("Need valid backup root folder path and a device UDID.")
 
-    return info
+    return deviceBasicInfo
+
+def ExecuteQuery(databasePath, query):
+    """Connects to the database available in the input path and executes the input query.
+    Returns the list of extracted data and an error message in case of fail."""
+
+    extractedData = None
+    errorMsg = None
+
+    # Connect to the database
+    conn = sqlite3.connect(databasePath)
+
+    try:
+        cursor = conn.cursor()
+        results = cursor.execute(query)
+
+        extractedData = [dict(zip([column[0] for column in cursor.description], row)) for row in results]
+
+    except Exception as error:
+        errorMsg = globalConstants.queryExecutionError
+
+    conn.close()
+
+    return extractedData, errorMsg
+
+def GetChatList(deviceUdid):
+    """Returns a list of object containing the informations about the list of available chats in the device backup.
+    Returns also an error message in case an error occurs during extraction.
+    The function takes the device UDID as input in order to select the correct database from which extract the infos."""
+    query = globalConstants.queryChatList
+
+    databasePath = globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
+
+    extractedData, errorMsg = ExecuteQuery(databasePath, query)
+
+    return extractedData, errorMsg
+
+def GetPrivateChatList(deviceUdid, phoneNumber):
+    countersQuery = globalConstants.queryPrivateChatCountersPT1 + phoneNumber + globalConstants.queryPrivateChatCountersPT2
+
+    databasePath = globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
+
+    chatCounters, errorMsg = ExecuteQuery(databasePath, countersQuery)
+
+    chatDataQuery = globalConstants.queryPrivateChatMessagesPT1 + phoneNumber + globalConstants.queryPrivateChatMessagesPT2
+
+    messages, errorMsg = ExecuteQuery(databasePath, chatDataQuery)
+
+    return chatCounters, messages, errorMsg
+
+def GetGpsData(deviceUdid):
+    """Returns a list of object containing the informations about the gps locations extracted from the device backup.
+    The list of gps data includes gps locations received and sent by the database owner.
+    Returns also an error message in case an error occurs during extraction.
+    The function takes the device UDID as input in order to select the correct database from which extract the infos."""
+    query = globalConstants.queryGpsData
+
+    databasePath = globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
+
+    extractedData, errorMsg = ExecuteQuery(databasePath, query)
+
+    return extractedData, errorMsg
+
+def GetBlockedContacts(deviceUdid):
+    """Returns a list of object containing the informations about the blocked contacts extracted from the device backup.
+    Returns also an error message in case an error occurs during extraction.
+    The function takes the device UDID as input in order to select the correct database from which extract the infos."""
+    query = globalConstants.queryBlockedContacts
+
+    databasePath = globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
+
+    extractedData, errorMsg = ExecuteQuery(databasePath, query)
+
+    return extractedData, errorMsg
+
+def GetGroupList(deviceUdid):
+    """Returns a list of object containing the informations about the list of available group chats in the device backup.
+    Returns also an error message in case an error occurs during extraction.
+    The function takes the device UDID as input in order to select the correct database from which extract the infos."""
+    query = globalConstants.queryGroupList
+
+    databasePath = globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
+
+    extractedData, errorMsg = ExecuteQuery(databasePath, query)
+
+    return extractedData, errorMsg
+
+def GetMediaFromBackup(deviceUdid, filePath, isChatMedia, isProfilePic):
+
+    imagePath = None
+
+    with sqlite3.connect(os.path.join(globalConstants.deviceExtractions_FOLDER, deviceUdid, "Manifest.db")) as manifest:
+        manifest.row_factory = sqlite3.Row
+        c = manifest.cursor()
+        if isChatMedia:
+            filePath = 'Message/' + filePath
+            c.execute(f"""SELECT fileID,
+                                            relativePath,
+                                            flags,
+                                            ROW_NUMBER() OVER(ORDER BY relativePath) AS _index
+                                    FROM Files
+                                    WHERE
+                                        domain = '{globalConstants.WhatsAppDomain}'
+                                        AND relativePath LIKE '{filePath}'
+                                    ORDER BY relativePath""")
+        if isProfilePic:
+            filePath = 'Media/Profile/%' + filePath + '%'
+            c.execute(f"""SELECT fileID,
+                                relativePath,
+                                flags,
+                                ROW_NUMBER() OVER(ORDER BY relativePath) AS _index
+                        FROM Files
+                        WHERE
+                            domain = '{globalConstants.WhatsAppDomain}'
+                            AND relativePath LIKE '{filePath}'
+                            AND relativePath NOT LIKE '%-%-%'
+                        ORDER BY relativePath DESC""")
+        row = c.fetchone()
+        while row is not None:
+            if row["relativePath"] == "":
+                row = c.fetchone()
+                continue
+            hashes = row["fileID"]
+            folder = hashes[:2]
+            flags = row["flags"]
+            if flags == 1:
+                imagePath = os.path.join(globalConstants.deviceExtractions_FOLDER, deviceUdid, folder, hashes)
+                print(imagePath)
+                break
+            row = c.fetchone()
+
+    return imagePath

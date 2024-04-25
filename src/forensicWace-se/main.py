@@ -170,29 +170,36 @@ def PrivateChat():
         userProfilePicPath = extraction.GetMediaFromBackup(deviceUdid, phoneNumber[-10:], False, True)
         dbOwnerProfilePicPath = extraction.GetMediaFromBackup(deviceUdid, 'Photo', False, True)
 
+        warningFilteredMsg = None
+
         # Filter messages to view on the page
         if messageType is not None and messageType == globalConstants.imageMediaType:
             messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.imageMediaType or m['ZMESSAGETYPE'] == globalConstants.oneTimeImageMediaType]     # Images
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "IMAGES"
         elif messageType is not None and messageType == globalConstants.videoMediaType:
             messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.videoMediaType or m['ZMESSAGETYPE'] == globalConstants.oneTimeVideoMediaType]     # Video
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "VIDEOS"
         elif messageType is not None and messageType == globalConstants.audioMediaType:
             messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.audioMediaType]  # Audio
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "AUDIOS"
         elif messageType is not None and messageType == globalConstants.contactMediaType:
             messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.contactMediaType]  # Contact
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "CONTACTS"
         elif messageType is not None and messageType == globalConstants.positionMediaType:
             messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.positionMediaType]  # Position
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "POSITIONS"
         elif messageType is not None and messageType == globalConstants.urlMediaType:
-            messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.urlMediaType]  # URL
+            messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.urlMediaType]  # URLs
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "URLS"
         elif messageType is not None and messageType == globalConstants.fileMediaType:
             messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.fileMediaType]  # File
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "FILES"
         elif messageType is not None and messageType == globalConstants.gifMediaType:
             messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.gifMediaType]  # Gif
-        elif messageType is not None and messageType == globalConstants.deletedMessages:
-            messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.deletedMessages]  # Deleted messages
-        elif messageType is not None and messageType == globalConstants.positionMediaType:
-            messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.positionMediaType]  # Position
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "GIFS"
         elif messageType is not None and messageType == globalConstants.stickerMediaType:
             messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.stickerMediaType]  # Sticker
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "STICKERS"
 
         if phoneNumber == globalConstants.invalidPhoneNumber:
             return render_template('insertPhoneNumber.html',
@@ -217,7 +224,8 @@ def PrivateChat():
                                    positionMediaType=globalConstants.positionMediaType,
                                    stickerMediaType=globalConstants.stickerMediaType,
                                    urlMediaType=globalConstants.urlMediaType,
-                                   fileMediaType=globalConstants.fileMediaType
+                                   fileMediaType=globalConstants.fileMediaType,
+                                   warningFilteredMsg=warningFilteredMsg
                                    )
 # endregion
 

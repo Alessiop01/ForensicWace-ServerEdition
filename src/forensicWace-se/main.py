@@ -2,47 +2,49 @@ from flask import Flask, render_template, request, redirect, url_for
 
 import os
 
+# Import Custom Modules
 import extraction
 import utils
 import globalConstants
 
-app = Flask(__name__ , static_folder='/')
+app = Flask(__name__, static_folder='/')
 
 # Configure each folder into the app
 app.config['deviceExtractions_FOLDER'] = globalConstants.deviceExtractions_FOLDER
 app.config['assetsImage_FOLDER'] = globalConstants.assetsImage_FOLDER
 
-app.secret_key = 'ForensicWace-SE-SecretKey'  # Chiave segreta per la sessione
-
 # Dictionary to store all the variables and data for each connected host
 hostsData = {}
 
+
 # region Host Data Management
 def AddOrUpdateHostData(hostId, data):
-    """Creates or updates data for the host based on host Id.
-    If host Id is NOT in the list then ADDs it to the list.
-    If the host Id IS already in the list then UPDATE its values."""
+    """Creates or updates data for the host based on hostId.
+    If hostId is NOT in the list then ADDs it to the list.
+    If the hostId IS already in the list then UPDATE its values."""
     if hostId in hostsData:
         hostsData[hostId].update(data)
     else:
         hostsData[hostId] = data
 
+
 def RemoveHostData(hostId):
-    """Deletes all the data for the host based on host Id."""
+    """Deletes all the data for the host based on hostId."""
     if hostId in hostsData:
-        del(hostsData[hostId])
+        del (hostsData[hostId])
 # endregion
 
 # region  Route Definitions
+
 
 # region / (index)
 @app.route('/')
 def Index():
     """Defines the logic for the index page.
-    If the host Id is NOT in the list then shows the page to select the device extraction to be used.
-    If the host Id IS already in the list then shows the page to select the functionality to be used."""
+    If the hostId is NOT in the list then shows the page to select the device extraction to be used.
+    If the hostId IS already in the list then shows the page to select the functionality to be used."""
 
-    # Retrieve remote host Id
+    # Retrieve remote hostId
     clientId = request.remote_addr
 
     if clientId not in hostsData:
@@ -69,10 +71,11 @@ def Index():
                                )
 # endregion
 
+
 # region /ChooseExtraction
 @app.route('/ChooseExtraction')
 def ChooseExtraction():
-    """Adds the information about the selected extracted backup to the system dictionary for the host Id."""
+    """Adds the information about the selected extracted backup to the system dictionary for the hostId."""
     clientId = request.remote_addr
     AddOrUpdateHostData(clientId, {"udid": request.args.get('udid')})
     AddOrUpdateHostData(clientId, {"name": request.args.get('name')})
@@ -80,6 +83,7 @@ def ChooseExtraction():
     AddOrUpdateHostData(clientId, {"messageType": "All"})
     return redirect(url_for('Index'))
 # endregion
+
 
 # region /ChangeLogo
 @app.route('/ChangeLogo', methods=['GET', 'POST'])
@@ -96,26 +100,28 @@ def ChangeLogo():
     return render_template('changeLogo.html')
 # endregion
 
+
 # region /Exit
 @app.route('/Exit')
 def Exit():
     """Redirect the user to the index page to select a new backup extraction.
-    Deletes all the data related to the host Id."""
-    # Retrieve remote host Id
+    Deletes all the data related to the hostId."""
+    # Retrieve remote hostId
     clientId = request.remote_addr
 
     # Delete all data related to the remote host
     RemoveHostData(clientId)
 
     return redirect(url_for('Index'))
-#endregion
+# endregion
+
 
 # region /ChatList
 @app.route('/ChatList')
 def ChatList():
     errorMsg = None
 
-    # Retrieve remote host Id
+    # Retrieve remote hostId
     clientId = request.remote_addr
 
     if clientId not in hostsData:
@@ -139,16 +145,18 @@ def ChatList():
                                formatPhoneNumber=utils.FormatPhoneNumberForPageTables)
 # endregion
 
+
 # region /InsertPhoneNumber
 @app.route('/InsertPhoneNumber')
 def InsertPhoneNumber():
     return render_template('insertPhoneNumber.html')
 # endregion
 
+
 # region /PrivateChat
 @app.route('/PrivateChat', methods=['POST'])
 def PrivateChat():
-    # Retrieve remote host Id
+    # Retrieve remote hostId
     clientId = request.remote_addr
 
     if clientId not in hostsData:
@@ -229,10 +237,11 @@ def PrivateChat():
                                    )
 # endregion
 
+
 # region /GpsLocations
 @app.route('/GpsLocations')
 def GpsLocations():
-    # Retrieve remote host Id
+    # Retrieve remote hostId
     clientId = request.remote_addr
 
     if clientId not in hostsData:
@@ -252,10 +261,11 @@ def GpsLocations():
                                formatPhoneNumber=utils.FormatPhoneNumberForPageTables)
 # endregion
 
+
 # region /BlockedContacts
 @app.route('/BlockedContacts')
 def BlockedContacts():
-    # Retrieve remote host Id
+    # Retrieve remote hostId
     clientId = request.remote_addr
 
     if clientId not in hostsData:
@@ -275,12 +285,13 @@ def BlockedContacts():
                                formatPhoneNumber=utils.FormatPhoneNumberForPageTables)
 # endregion
 
+
 # region /GroupList
 @app.route('/GroupList')
 def GroupList():
     errorMsg = None
 
-    # Retrieve remote host Id
+    # Retrieve remote hostId
     clientId = request.remote_addr
 
     if clientId not in hostsData:
@@ -292,7 +303,7 @@ def GroupList():
         groupListData, errorMsg = extraction.GetGroupList(hostsData[clientId]['udid'])
         AddOrUpdateHostData(clientId, {"groupListData": groupListData})
 
-    if errorMsg:
+    if errorMsg is not None:
         return render_template('groupList.html',
                                errorMsg=errorMsg,
                                groupListData=None,
@@ -303,13 +314,14 @@ def GroupList():
                                groupListData=groupListData,
                                formatPhoneNumber=utils.FormatPhoneNumberForPageTables)
 # endregion
+
 
 # region /SelectGroup
 @app.route('/SelectGroup')
 def SelectGroup():
     errorMsg = None
 
-    # Retrieve remote host Id
+    # Retrieve remote hostId
     clientId = request.remote_addr
 
     if clientId not in hostsData:
@@ -333,9 +345,10 @@ def SelectGroup():
                                formatPhoneNumber=utils.FormatPhoneNumberForPageTables)
 # endregion
 
+
 # region /GroupChat
-@app.route('/GroupChat')
-#def GroupChat():
+# @app.route('/GroupChat')
+# def GroupChat():
 # endregion
 
 # endregion
@@ -343,6 +356,7 @@ def SelectGroup():
 def main():
     """Defines the main function of the application."""
     app.run(host='0.0.0.0', debug=True)
+
 
 if __name__ == '__main__':
     main()

@@ -13,6 +13,7 @@ iosInfoFiles = {
     'status': 'Status.plist'
 }
 
+
 def GetDeviceExtractionList(deviceExtractionPath):
     """Gets the list of all devices backup extraction available in the system.
     The base folder is taken as input parameter.
@@ -26,9 +27,9 @@ def GetDeviceExtractionList(deviceExtractionPath):
     toReturnList = []
 
     if deviceExtractionPath:
-        (_, dirnames, _) = next(os.walk(deviceExtractionPath))
+        (_, dirNames, _) = next(os.walk(deviceExtractionPath))
 
-        for i in dirnames:
+        for i in dirNames:
             GetDeviceBasicInfo(udid=i, path=deviceExtractionPath)
             toReturnList.append(GetDeviceBasicInfo(udid=i, path=deviceExtractionPath))
 
@@ -36,9 +37,10 @@ def GetDeviceExtractionList(deviceExtractionPath):
     else:
         raise Exception("Need valid backup root folder path passed through 'deviceExtractionPath'.")
 
+
 def GetDeviceBasicInfo(udid, path):
     """Gets the basic device information from the manifest file for a specific device Udid.
-    Returns an object containing the basic device informations.
+    Returns an object containing the basic device information.
     If the manifest file is not found, an empty object is returned."""
     if udid and path:
         manifestFile = os.path.join(path, udid, iosInfoFiles['manifest'])
@@ -61,6 +63,7 @@ def GetDeviceBasicInfo(udid, path):
         raise Exception("Need valid backup root folder path and a device UDID.")
 
     return deviceBasicInfo
+
 
 def ExecuteQuery(databasePath, query):
     """Connects to the database available in the input path and executes the input query.
@@ -85,8 +88,9 @@ def ExecuteQuery(databasePath, query):
 
     return extractedData, errorMsg
 
+
 def GetChatList(deviceUdid):
-    """Returns a list of object containing the informations about the list of available chats in the device backup.
+    """Returns a list of object containing the information about the list of available chats in the device backup.
     Returns also an error message in case an error occurs during extraction.
     The function takes the device UDID as input in order to select the correct database from which extract the infos."""
     query = globalConstants.queryChatList
@@ -97,7 +101,8 @@ def GetChatList(deviceUdid):
 
     return extractedData, errorMsg
 
-def GetPrivateChatList(deviceUdid, phoneNumber):
+
+def GetPrivateChat(deviceUdid, phoneNumber):
     countersQuery = globalConstants.queryPrivateChatCountersPT1 + phoneNumber + globalConstants.queryPrivateChatCountersPT2
 
     databasePath = globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
@@ -110,8 +115,9 @@ def GetPrivateChatList(deviceUdid, phoneNumber):
 
     return chatCounters, messages, errorMsg
 
+
 def GetGpsData(deviceUdid):
-    """Returns a list of object containing the informations about the gps locations extracted from the device backup.
+    """Returns a list of object containing the information about the gps locations extracted from the device backup.
     The list of gps data includes gps locations received and sent by the database owner.
     Returns also an error message in case an error occurs during extraction.
     The function takes the device UDID as input in order to select the correct database from which extract the infos."""
@@ -123,8 +129,9 @@ def GetGpsData(deviceUdid):
 
     return extractedData, errorMsg
 
+
 def GetBlockedContacts(deviceUdid):
-    """Returns a list of object containing the informations about the blocked contacts extracted from the device backup.
+    """Returns a list of object containing the information about the blocked contacts extracted from the device backup.
     Returns also an error message in case an error occurs during extraction.
     The function takes the device UDID as input in order to select the correct database from which extract the infos."""
     query = globalConstants.queryBlockedContacts
@@ -135,8 +142,9 @@ def GetBlockedContacts(deviceUdid):
 
     return extractedData, errorMsg
 
+
 def GetGroupList(deviceUdid):
-    """Returns a list of object containing the informations about the list of available group chats in the device backup.
+    """Returns a list of object containing the information about the list of available group chats in the device backup.
     Returns also an error message in case an error occurs during extraction.
     The function takes the device UDID as input in order to select the correct database from which extract the infos."""
     query = globalConstants.queryGroupList
@@ -147,6 +155,22 @@ def GetGroupList(deviceUdid):
 
     return extractedData, errorMsg
 
+
+def GetGroupChat(deviceUdid, groupName):
+    countersQuery = globalConstants.queryGroupChatCountersPT1 + groupName + globalConstants.queryGroupChatCountersPT2
+
+    databasePath = globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
+
+    chatCounters, errorMsg = ExecuteQuery(databasePath, countersQuery)
+
+    chatDataQuery = globalConstants.queryGroupChatMessagesPT1 + groupName + globalConstants.queryGroupChatMessagesPT2
+
+    messages, errorMsg = ExecuteQuery(databasePath, chatDataQuery)
+
+    return chatCounters, messages, errorMsg
+
+
+# noinspection SqlNoDataSourceInspection
 def GetMediaFromBackup(deviceUdid, filePath, isChatMedia, isProfilePic):
 
     imagePath = None

@@ -168,12 +168,15 @@ def PrivateChat():
         retrievedMessageType = request.form['messageType']
         messageType = 0
 
-        # Convert retrieved messageType from string to integer in is a number
-        if retrievedMessageType.isdigit():
-            messageType = int(retrievedMessageType)
-        print("messageType", messageType)
+        if request.form['phoneNumber'] is None or request.form['phoneNumber'] == '':
+            return render_template('insertPhoneNumber.html', errorMsg=globalConstants.invalidPhoneNumberErrorMsg)
 
-        chatCounters, messages, errorMsg = extraction.GetPrivateChatList(hostsData[clientId]['udid'], phoneNumber[-10:])   # phoneNumber[-10:] --> Pass the last 10 characters inserted
+        # Convert retrieved messageType from string to integer in is a number
+        if retrievedMessageType != -1:
+            if retrievedMessageType.isdigit():
+                messageType = int(retrievedMessageType)
+
+        chatCounters, messages, errorMsg = extraction.GetPrivateChat(hostsData[clientId]['udid'], phoneNumber[-10:])  # phoneNumber[-10:] --> Pass the last 10 characters inserted
 
         userProfilePicPath = extraction.GetMediaFromBackup(deviceUdid, phoneNumber[-10:], False, True)
         dbOwnerProfilePicPath = extraction.GetMediaFromBackup(deviceUdid, 'Photo', False, True)

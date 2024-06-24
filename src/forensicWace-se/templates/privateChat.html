@@ -228,6 +228,25 @@
                     </div>
                     <div class="row">
                         <div class="col">
+                            <div id="accordion-2" class="accordion" role="tablist" style="margin-bottom: 24px;">
+                                <div class="accordion-item" style="border-radius: 25px;">
+                                    <h2 class="accordion-header" role="tab"><button class="accordion-button border rounded-pill collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-2 .item-1" aria-expanded="true" aria-controls="accordion-2 .item-1" style="height: 50px;"><i class="fas fa-filter d-xxl-flex justify-content-xxl-center align-items-xxl-center" style="padding-right: 5px;text-align: left;"></i>Filters</button></h2>
+                                    <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-2">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-4"><i class="far fa-calendar-alt" style="margin-right: 12px;"></i><label class="form-label">From Date</label><input class="border rounded-pill" type="date" style="width: 100%;padding-left: 12px;padding-right: 12px;font-size: 20px;" /></div>
+                                                <div class="col-md-4"><i class="far fa-calendar-alt" style="margin-right: 12px;"></i><label class="form-label">To Date<br /></label><input class="border rounded-pill" type="date" style="width: 100%;padding-left: 12px;padding-right: 12px;font-size: 20px;" /></div>
+                                                <div class="col-md-4"><i class="fas fa-search" style="margin-right: 12px;"></i><label class="form-label">Search Keyword<br /></label><input class="border rounded-pill" type="text" style="width: 100%;padding-left: 12px;padding-right: 12px;font-size: 20px;" /></div>
+                                            </div>
+                                            <div style="text-align: right;margin-top: 20px;"><a class="btn btn-light btn-icon-split" role="button" style="margin-top: 0;margin-right: 25px;"><span class="text-black-50 icon"><i class="fas fa-broom"></i></span><span class="text-dark text">Clear filters</span></a><a class="btn btn-primary btn-icon-split" role="button" style="margin-top: 0;margin-left: 25px;"><span class="text-white-50 icon"><i class="fas fa-filter"></i></span><span class="text-white text">Apply filters</span></a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
                             <div class="card" id="chat1" style="border-radius: 5.6px; height:700px;">
                                 <div class="card-header d-flex justify-content-between align-items-center p-3 text-white border-bottom-0" style="border-top-left-radius: 5.6px; border-top-right-radius: 5.6px; background-color: #4e73df">
                                     <p class="mb-0 fw-bold text-cenye">Chat with {{ messages[0].ZPARTNERNAME }}</p>
@@ -909,6 +928,7 @@
         <a class="border rounded-circle d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     {% include "footer.html" %}
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>

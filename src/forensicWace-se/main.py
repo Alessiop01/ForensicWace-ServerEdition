@@ -347,8 +347,83 @@ def SelectGroup():
 
 
 # region /GroupChat
-# @app.route('/GroupChat')
-# def GroupChat():
+@app.route('/GroupChat', methods=['POST'])
+def GroupChat():
+    # Retrieve remote hostId
+    clientId = request.remote_addr
+
+    if clientId not in hostsData:
+        return redirect(url_for('Index'))
+    else:
+        deviceUdid = hostsData[clientId]['udid']
+
+        groupName = request.form['groupName']
+        retrievedMessageType = request.form['messageType']
+        messageType = 0
+
+        # Convert retrieved messageType from string to integer in is a number
+        if retrievedMessageType.isdigit():
+            messageType = int(retrievedMessageType)
+        print("messageType", messageType)
+
+        chatCounters, messages, errorMsg = extraction.GetGroupChat(hostsData[clientId]['udid'], groupName)
+
+        dbOwnerProfilePicPath = extraction.GetMediaFromBackup(deviceUdid, 'Photo', False, True)
+
+        warningFilteredMsg = None
+
+        # Filter messages to view on the page
+        if messageType is not None and messageType == globalConstants.imageMediaType:
+            messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.imageMediaType or m['ZMESSAGETYPE'] == globalConstants.oneTimeImageMediaType]     # Images
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "IMAGES"
+        elif messageType is not None and messageType == globalConstants.videoMediaType:
+            messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.videoMediaType or m['ZMESSAGETYPE'] == globalConstants.oneTimeVideoMediaType]     # Video
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "VIDEOS"
+        elif messageType is not None and messageType == globalConstants.audioMediaType:
+            messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.audioMediaType]  # Audio
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "AUDIOS"
+        elif messageType is not None and messageType == globalConstants.contactMediaType:
+            messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.contactMediaType]  # Contact
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "CONTACTS"
+        elif messageType is not None and messageType == globalConstants.positionMediaType:
+            messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.positionMediaType]  # Position
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "POSITIONS"
+        elif messageType is not None and messageType == globalConstants.urlMediaType:
+            messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.urlMediaType]  # URLs
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "URLS"
+        elif messageType is not None and messageType == globalConstants.fileMediaType:
+            messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.fileMediaType]  # File
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "FILES"
+        elif messageType is not None and messageType == globalConstants.gifMediaType:
+            messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.gifMediaType]  # Gif
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "GIFS"
+        elif messageType is not None and messageType == globalConstants.stickerMediaType:
+            messages = [m for m in messages if m['ZMESSAGETYPE'] == globalConstants.stickerMediaType]  # Sticker
+            warningFilteredMsg = globalConstants.chatFilterBaseMessage + "STICKERS"
+
+        return render_template('groupChat.html',
+                               groupName=groupName,
+                               chatCounters=chatCounters,
+                               messages=messages,
+                               GetSentDateTime=utils.GetSentDateTime,
+                               GetReadDateTime=utils.GetReadDateTime,
+                               deviceUdid=deviceUdid,
+                               GetMediaFromBackup=extraction.GetMediaFromBackup,
+                               dbOwnerProfilePicPath=dbOwnerProfilePicPath,
+                               str=str,
+                               imageMediaType=globalConstants.imageMediaType,
+                               videoMediaType=globalConstants.videoMediaType,
+                               audioMediaType=globalConstants.audioMediaType,
+                               contactMediaType=globalConstants.contactMediaType,
+                               positionMediaType=globalConstants.positionMediaType,
+                               stickerMediaType=globalConstants.stickerMediaType,
+                               urlMediaType=globalConstants.urlMediaType,
+                               fileMediaType=globalConstants.fileMediaType,
+                               warningFilteredMsg=warningFilteredMsg,
+                               formatPhoneNumber=utils.FormatPhoneNumberForPageTables,
+                               vcardTelExtractor=""
+                               )
+
 # endregion
 
 # endregion

@@ -63,7 +63,11 @@
                                         {% elif item.Is_muted == None %}
                                         <td><i class="fas fa-volume-up text-success" style="font-size: 27px;"></i></td>
                                         {% endif %}
-                                        <td style="width: 200px;"><a class="btn btn-light btn-icon-split" role="button" href="/GroupChat"><span class="text-black-50 icon"><i class="fas fa-external-link-alt"></i></span><span class="text-dark text">Open Chat</span></a></td>
+                                        <form id="{{ item.Group_Name }}" action="/GroupChat" method="post">
+                                            <input type="text" id="groupName" name="groupName" value="{{ item.Group_Name }}" style="display: None">
+                                            <input type="number" autofocus="" id="messageType" name="messageType" style="display: None">
+                                        </form>
+                                        <td style="width: 200px;"><a class="btn btn-light btn-icon-split" role="button" onclick="document.getElementById('{{ item.Group_Name }}').submit();"><span class="text-black-50 icon"><i class="fas fa-external-link-alt"></i></span><span class="text-dark text">Open Chat</span></a></td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

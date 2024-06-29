@@ -117,7 +117,7 @@ def Exit():
 # endregion
 
 
-# region /ChatList
+# region ChatList
 @app.route('/ChatList')
 def ChatList():
     errorMsg = None
@@ -144,6 +144,24 @@ def ChatList():
                                errorMsg=errorMsg,
                                chatListData=chatListData,
                                formatPhoneNumber=utils.FormatPhoneNumberForPageTables)
+
+@app.route('/ExportChatList')
+def ExportChatList():
+    # Retrieve remote hostId
+    clientId = request.remote_addr
+
+    if clientId not in hostsData:
+        return redirect(url_for('Index'))
+
+    if clientId in hostsData and 'chatListData' in hostsData[clientId]:
+        chatListData = hostsData[clientId]['chatListData']
+    else:
+        chatListData, errorMsg = extraction.GetChatList(hostsData[clientId]['udid'])
+        AddOrUpdateHostData(clientId, {"chatListData": chatListData})
+
+    generatedReportZip = reporting.ExportChatList(hostsData[clientId]['udid'], chatListData)
+
+    return send_file(generatedReportZip, as_attachment=True)
 # endregion
 
 
@@ -302,6 +320,20 @@ def BlockedContacts():
                                errorMsg=errorMsg,
                                blockedContactsData=blockedContactsData,
                                formatPhoneNumber=utils.FormatPhoneNumberForPageTables)
+
+@app.route('/ExportBlockedContacts')
+def ExportBlockedContacts():
+    # Retrieve remote hostId
+    clientId = request.remote_addr
+
+    if clientId not in hostsData:
+        return redirect(url_for('Index'))
+
+    blockedContactsData, errorMsg = extraction.GetBlockedContacts(hostsData[clientId]['udid'])
+
+    generatedReportZip = reporting.ExportBlockedContactsReport(hostsData[clientId]['udid'], blockedContactsData)
+
+    return send_file(generatedReportZip, as_attachment=True)
 # endregion
 
 

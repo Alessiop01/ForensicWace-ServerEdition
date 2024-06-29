@@ -12,6 +12,7 @@ WhatsAppDomain = 'AppDomainGroup-group.net.whatsapp.WhatsApp.shared'
 # Error variables
 invalidPhoneNumber = "Invalid phone number"
 infoNotAvailable = "Information not available"
+notAvailable = "Not available"
 
 # Error messages
 invalidPhoneNumberErrorMsg = "The phone number you entered is INVALID, please try again"
@@ -52,3 +53,5 @@ pollMediaType = 46
 
 # Report name
 GpsDataReport = "-GpsLocations"
+ChatListReport = "-ChatListReport"
+BlockedContactsReport = "-BlockedContacts"

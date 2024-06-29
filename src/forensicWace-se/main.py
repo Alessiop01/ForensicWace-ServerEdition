@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_file
 
 import os
 
@@ -6,6 +6,7 @@ import os
 import extraction
 import utils
 import globalConstants
+import reporting
 
 app = Flask(__name__, static_folder='/')
 
@@ -241,7 +242,7 @@ def PrivateChat():
 # endregion
 
 
-# region /GpsLocations
+# region GpsLocations
 @app.route('/GpsLocations')
 def GpsLocations():
     # Retrieve remote hostId
@@ -262,6 +263,21 @@ def GpsLocations():
                                errorMsg=errorMsg,
                                gpsData=gpsData,
                                formatPhoneNumber=utils.FormatPhoneNumberForPageTables)
+
+@app.route('/ExportGpsLocations')
+def ExportGpsLocations():
+    # Retrieve remote hostId
+    clientId = request.remote_addr
+
+    if clientId not in hostsData:
+        return redirect(url_for('Index'))
+
+    gpsData, errorMsg = extraction.GetGpsData(hostsData[clientId]['udid'])
+
+    generatedReportZip = reporting.ExportGpsLocations(hostsData[clientId]['udid'], gpsData)
+
+    return send_file(generatedReportZip, as_attachment=True)
+    
 # endregion
 
 

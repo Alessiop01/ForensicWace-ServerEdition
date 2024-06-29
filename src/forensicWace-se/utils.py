@@ -181,3 +181,11 @@ def GetReadDateTime(blob):
         return messageDateTime
     else:
         return globalConstants.infoNotAvailable
+
+def DeleteFilesIfExist(filePathArray):
+    for filePath in filePathArray:
+        if os.path.isfile(filePath):
+            os.remove(filePath)
+            print(f"Deleted file: {filePath}")
+        else:
+            print(f"File not found: {filePath}")

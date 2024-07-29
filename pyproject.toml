@@ -12,17 +12,6 @@ classifiers = [
 version = "1.0.0"
 
 dependencies = [
-    "tensorflow",
-    "Pillow",
-    "cryptography",
-    "Flask",
-    "rfc3161ng",
-    "vobject",
-    "iOSbackup",
-    "reportlab",
-    "protobuf-decoder",
-    "iOSbackup",
-    "bleach"
 ]
 
 [project.scripts]

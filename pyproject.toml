@@ -1,5 +1,5 @@
 [project]
-name = "ForensicWace"
+name = "ForensicWace-SE"
 description = "Forensic WACE SE - Forensic WhatsApp Chat Extractor Server Edition"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -25,7 +25,7 @@ dependencies = [
 ]
 
 [project.scripts]
-forensic-wace = "forensicWace.main:main"
+forensic-wace-se = "forensicWace-se.main:main"
 
 [build-system]
 requires = ["setuptools", "setuptools-scm"]
@@ -36,4 +36,4 @@ namespaces = true
 where = ["src"]
 
 [tool.setuptools.package-data]
-"forensicWace.assets" = ["*.*"]
+"forensicWace-se.assets" = ["*.*"]

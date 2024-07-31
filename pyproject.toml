@@ -36,4 +36,4 @@ namespaces = true
 where = ["src"]
 
 [tool.setuptools.package-data]
-"forensicWace-se.assets" = ["*.*"]
+"forensicWace_SE.assets" = ["*.*"]

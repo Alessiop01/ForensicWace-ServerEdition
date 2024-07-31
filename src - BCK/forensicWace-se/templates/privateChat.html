@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Forensic Wace</title>
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="../assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../assets/css/--mp---Masonry-Gallery-with-Loader-styles.css">
+    <link rel="stylesheet" href="../assets/css/Features-Cards-icons.css">
+    <link rel="stylesheet" href="../assets/css/Forensic_WACE.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
+</head>
+
+<body style="background: #f8f9fc;">
+    {% include "navbar.html" %}
+    <hr style="margin-top: 7px;margin-bottom: 13px;">
+    {% if warningFilteredMsg %}
+        <div class="row">
+            <div class="col text-center">
+                <div class="alert alert-warning alert-dismissible mx-auto" role="alert" style="width: 90%;"><button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button><a class="btn btn-warning btn-circle ms-1" role="button" style="margin-right: 15px;padding-top: 0px;padding-bottom: 0px;"><i class="fas fa-exclamation-triangle text-white"></i></a><span style="font-size: 24px;"><strong>{{ warningFilteredMsg }}</strong><br /></span></div>
+            </div>
+        </div>
+        <hr style="margin-top: 7px;margin-bottom: 13px;">
+    {% endif %}
+    <div id="wrapper">
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <div class="container-fluid">
+                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                        <h3 class="text-dark mb-0">Conversation with: <span style="font-weight: bold">{{ messages[0].ZPARTNERNAME }}</span></h3><a class="btn btn-primary btn-icon-split" href="" role="button"><span class="text-white-50 icon"><i class="fas fa-file-export"></i></span><span class="text-white text">EXPORT CHAT</span></a>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-warning py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col me-2">
+                                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>Phone Number</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{ phoneNumber }}</span></div>
+                                        </div>
+                                        <div class="col-auto"><i class="fas fa-phone fa-2x text-gray-300"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-primary py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <form id="totalMessages" action="/PrivateChat" method="post">
+                                            <input class="border rounded-pill" type="tel" autofocus="" id="phoneNumber" name="phoneNumber" value="{{ unformattedPhoneNumber }}" style="display: None">
+                                            <input class="border rounded-pill" type="number" autofocus="" id="messageType" name="messageType" value="0" style="display: None">
+                                        </form>
+                                        <div class="col me-2" onclick="document.getElementById('totalMessages').submit();" style="cursor: pointer;">
+                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Total messages</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{ chatCounters[0].TotalMessages }} messages</span></div>
+                                        </div>
+                                        <div class="col-auto"><i class="far fa-comment-alt fa-2x text-gray-300"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-primary py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col me-2">
+                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Deleted messages</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{ chatCounters[0].DeletedMessages }} messages</span></div>
+                                        </div>
+                                        <div class="col-auto"><i class="fas fa-trash fa-2x text-gray-300"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col me-2">
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Attachments</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{ chatCounters[0].Attachments }} attachments</span></div>
+                                        </div>
+                                        <div class="col-auto"><i class="fas fa-paperclip fa-2x text-gray-300"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <form id="imageMediaType" action="/PrivateChat" method="post">
+                                            <input class="border rounded-pill" type="tel" autofocus="" id="phoneNumber" name="phoneNumber" value="{{ unformattedPhoneNumber }}" style="display: None">
+                                            <input class="border rounded-pill" type="number" autofocus="" id="messageType" name="messageType" value="{{ imageMediaType }}" style="display: None">
+                                        </form>
+                                        <div class="col me-2" onclick="document.getElementById('imageMediaType').submit();" style="cursor: pointer;">
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Images</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{ chatCounters[0].Images }} images</span></div>
+                                        </div>
+                                        <div class="col-auto"><i class="far fa-file-image fa-2x text-gray-300"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <form id="videoMediaType" action="/PrivateChat" method="post">
+                                            <input class="border rounded-pill" type="tel" autofocus="" id="phoneNumber" name="phoneNumber" value="{{ unformattedPhoneNumber }}" style="display: None">
+                                            <input class="border rounded-pill" type="number" autofocus="" id="messageType" name="messageType" value="{{ videoMediaType }}" style="display: None">
+                                        </form>
+                                        <div class="col me-2" onclick="document.getElementById('videoMediaType').submit();" style="cursor: pointer;">
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Videos</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{ chatCounters[0].Videos }} videos</span></div>
+                                        </div>
+                                        <div class="col-auto"><i class="far fa-file-video fa-2x text-gray-300"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <form id="audioMediaType" action="/PrivateChat" method="post">
+                                            <input class="border rounded-pill" type="tel" autofocus="" id="phoneNumber" name="phoneNumber" value="{{ unformattedPhoneNumber }}" style="display: None">
+                                            <input class="border rounded-pill" type="number" autofocus="" id="messageType" name="messageType" value="{{ audioMediaType }}" style="display: None">
+                                        </form>
+                                        <div class="col me-2" onclick="document.getElementById('audioMediaType').submit();" style="cursor: pointer;">
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Audios</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{ chatCounters[0].Audio }} audios</span></div>
+                                        </div>
+                                        <div class="col-auto"><i class="far fa-file-audio fa-2x text-gray-300"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <form id="contactMediaType" action="/PrivateChat" method="post">
+                                            <input class="border rounded-pill" type="tel" autofocus="" id="phoneNumber" name="phoneNumber" value="{{ unformattedPhoneNumber }}" style="display: None">
+                                            <input class="border rounded-pill" type="number" autofocus="" id="messageType" name="messageType" value="{{ contactMediaType }}" style="display: None">
+                                        </form>
+                                        <div class="col me-2" onclick="document.getElementById('contactMediaType').submit();" style="cursor: pointer;">
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Contacts</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{ chatCounters[0].Contacts }} contacts</span></div>
+                                        </div>
+                                        <div class="col-auto"><i class="far fa-user fa-2x text-gray-300"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <form id="positionMediaType" action="/PrivateChat" method="post">
+                                            <input class="border rounded-pill" type="tel" autofocus="" id="phoneNumber" name="phoneNumber" value="{{ unformattedPhoneNumber }}" style="display: None">
+                                            <input class="border rounded-pill" type="number" autofocus="" id="messageType" name="messageType" value="{{ positionMediaType }}" style="display: None">
+                                        </form>
+                                        <div class="col me-2" onclick="document.getElementById('positionMediaType').submit();" style="cursor: pointer;">
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Positions</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{ chatCounters[0].Positions }} positions</span></div>
+                                        </div>
+                                        <div class="col-auto"><i class="fas fa-location-arrow fa-2x text-gray-300"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <form id="stickerMediaType" action="/PrivateChat" method="post">
+                                            <input class="border rounded-pill" type="tel" autofocus="" id="phoneNumber" name="phoneNumber" value="{{ unformattedPhoneNumber }}" style="display: None">
+                                            <input class="border rounded-pill" type="number" autofocus="" id="messageType" name="messageType" value="{{ stickerMediaType }}" style="display: None">
+                                        </form>
+                                        <div class="col me-2" onclick="document.getElementById('stickerMediaType').submit();" style="cursor: pointer;">
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Stickers</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{ chatCounters[0].Stickers }} stickers</span></div>
+                                        </div>
+                                        <div class="col-auto"><i class="far fa-sticky-note fa-2x text-gray-300"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <form id="urlMediaType" action="/PrivateChat" method="post">
+                                            <input class="border rounded-pill" type="tel" autofocus="" id="phoneNumber" name="phoneNumber" value="{{ unformattedPhoneNumber }}" style="display: None">
+                                            <input class="border rounded-pill" type="number" autofocus="" id="messageType" name="messageType" value="{{ urlMediaType }}" style="display: None">
+                                        </form>
+                                        <div class="col me-2" onclick="document.getElementById('urlMediaType').submit();" style="cursor: pointer;">
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>URLs</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{ chatCounters[0].Url }} urls</span></div>
+                                        </div>
+                                        <div class="col-auto"><i class="fas fa-link fa-2x text-gray-300"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-success py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <form id="fileMediaType" action="/PrivateChat" method="post">
+                                            <input class="border rounded-pill" type="tel" autofocus="" id="phoneNumber" name="phoneNumber" value="{{ unformattedPhoneNumber }}" style="display: None">
+                                            <input class="border rounded-pill" type="number" autofocus="" id="messageType" name="messageType" value="{{ fileMediaType }}" style="display: None">
+                                        </form>
+                                        <div class="col me-2" onclick="document.getElementById('fileMediaType').submit();" style="cursor: pointer;">
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Files</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{ chatCounters[0].File }} files</span></div>
+                                        </div>
+                                        <div class="col-auto"><i class="far fa-file fa-2x text-gray-300"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div id="accordion-2" class="accordion" role="tablist" style="margin-bottom: 24px;">
+                                <div class="accordion-item" style="border-radius: 25px;">
+                                    <h2 class="accordion-header" role="tab"><button class="accordion-button border rounded-pill collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-2 .item-1" aria-expanded="true" aria-controls="accordion-2 .item-1" style="height: 50px;"><i class="fas fa-filter d-xxl-flex justify-content-xxl-center align-items-xxl-center" style="padding-right: 5px;text-align: left;"></i>Filters</button></h2>
+                                    <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-2">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-4"><i class="far fa-calendar-alt" style="margin-right: 12px;"></i><label class="form-label">From Date</label><input class="border rounded-pill" type="date" style="width: 100%;padding-left: 12px;padding-right: 12px;font-size: 20px;" /></div>
+                                                <div class="col-md-4"><i class="far fa-calendar-alt" style="margin-right: 12px;"></i><label class="form-label">To Date<br /></label><input class="border rounded-pill" type="date" style="width: 100%;padding-left: 12px;padding-right: 12px;font-size: 20px;" /></div>
+                                                <div class="col-md-4"><i class="fas fa-search" style="margin-right: 12px;"></i><label class="form-label">Search Keyword<br /></label><input class="border rounded-pill" type="text" style="width: 100%;padding-left: 12px;padding-right: 12px;font-size: 20px;" /></div>
+                                            </div>
+                                            <div style="text-align: right;margin-top: 20px;"><a class="btn btn-light btn-icon-split" role="button" style="margin-top: 0;margin-right: 25px;"><span class="text-black-50 icon"><i class="fas fa-broom"></i></span><span class="text-dark text">Clear filters</span></a><a class="btn btn-primary btn-icon-split" role="button" style="margin-top: 0;margin-left: 25px;"><span class="text-white-50 icon"><i class="fas fa-filter"></i></span><span class="text-white text">Apply filters</span></a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card" id="chat1" style="border-radius: 5.6px; height:700px;">
+                                <div class="card-header d-flex justify-content-between align-items-center p-3 text-white border-bottom-0" style="border-top-left-radius: 5.6px; border-top-right-radius: 5.6px; background-color: #4e73df">
+                                    <p class="mb-0 fw-bold text-cenye">Chat with {{ messages[0].ZPARTNERNAME }}</p>
+                                </div>
+                                <div class="card-body" style="overflow-y: scroll; scroll-behavior: smooth; scroll-snap-type: y mandatory; scroll-snap-align: end;">
+                                {% for item in messages %}
+                                <!-- Controllo se testo, se si procedo in un modo, altrimenti procedo in base al tipo di messaggio -->
+                                    {% if item.ZMESSAGETYPE == 0 %}
+
+                                        {% if item.user is not none %}
+
+                                            <div class="d-flex flex-row justify-content-start mb-4">
+                                                <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
+                                                <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
+                                                    <p class="small mb-0">
+                                                        {% if item.text is not none %}
+                                                            {{ item.text }}
+                                                        {% endif %}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 62px; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ item.receiveDateTime }}
+                                            </p>
+
+                                        {% elif item.user is none %}
+
+                                            <div class="d-flex flex-row justify-content-end mb-4">
+                                                <div class="p-3 me-3 border" style="border-radius: 27.3px; background-color: rgba(0, 197, 53,.2);">
+                                                    <p class="small mb-0">
+                                                        {% if item.text is not none %}
+                                                            {{ item.text }}
+                                                        {% endif %}
+                                                    </p>
+                                                </div>
+                                                <img style="border-radius: 50%" src="{{ dbOwnerProfilePicPath }}" class="avatar">
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all fa-2x text-gray-300" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetSentDateTime(item.dateTimeInfos) }}
+                                            </p>
+                                            <p style="margin-top: -15px; margin-left: 84.5% ; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetReadDateTime(item.dateTimeInfos) }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    <!-- Deleted messages -->
+                                    {% elif item.ZMESSAGETYPE == 14 %}
+
+                                        {% if item.user is not none %}
+
+                                            <div class="d-flex flex-row justify-content-start mb-4">
+                                                <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
+                                                <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
+                                                    <p class="small mb-0">
+                                                        <i class="fas fa-trash"  style="color: #858796"></i>
+                                                        THIS MESSAGE HAS BEEN DELETED
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 62px; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ item.receiveDateTime }}
+                                            </p>
+
+                                        {% elif item.user is none %}
+
+                                            <div class="d-flex flex-row justify-content-end mb-4">
+                                                <div class="p-3 me-3 border" style="border-radius: 27.3px; background-color: rgba(0, 197, 53,.2);">
+                                                    <p class="small mb-0">
+                                                        <i class="fas fa-trash" style="color: #858796"></i>
+                                                        THIS MESSAGE HAS BEEN DELETED
+                                                    </p>
+                                                </div>
+                                                <img style="border-radius: 50%" src="{{ dbOwnerProfilePicPath }}" class="avatar">
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all fa-2x text-gray-300" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetSentDateTime(item.dateTimeInfos) }}
+                                            </p>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetReadDateTime(item.dateTimeInfos) }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    <!-- Images -->
+                                    {% elif item.ZMESSAGETYPE == 1 %}
+
+                                        {% if item.user is not none %}
+
+                                            <div class="d-flex flex-row justify-content-start mb-4">
+                                                <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
+                                                <div class="ms-3" style="border-radius: 27.3px;">
+                                                    <div class="bg-image">
+                                                        <div class="chatImage">
+                                                            {% if item.mediaPath is not none %}
+                                                                <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
+                                                                    <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                                </a>
+                                                            {% elif item.mediaPath is none %}
+                                                                <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 62px; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ item.receiveDateTime }}
+                                            </p>
+
+                                        {% elif item.user is none %}
+
+                                            <div class="d-flex flex-row justify-content-end mb-4">
+                                                <div class="ms-3" style="border-radius: 15px;">
+                                                    <div class="bg-image">
+                                                        <div style="max-width:450px; width: 100%; margin-right: 17px">
+                                                            {% if item.mediaPath is not none %}
+                                                                <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
+                                                                    <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                                </a>
+                                                            {% elif item.mediaPath is none %}
+                                                                <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <img style="border-radius: 50%" src="{{ dbOwnerProfilePicPath }}" class="avatar">
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all fa-2x text-gray-300" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetSentDateTime(item.dateTimeInfos) }}
+                                            </p>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetReadDateTime(item.dateTimeInfos) }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    <!-- 1 Time view image -->
+                                    {% elif item.ZMESSAGETYPE == 38 %}
+
+                                        {% if item.user is not none %}
+
+                                            <div class="d-flex flex-row justify-content-start mb-4">
+                                                <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
+                                                <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
+                                                    <p class="small mb-0">
+                                                        <i class="fas fa-spinner"  style="color: #858796"></i>
+                                                        ONE TIME IMAGE
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 62px; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ item.receiveDateTime }}
+                                            </p>
+
+                                        {% elif item.user is none %}
+
+                                            <div class="d-flex flex-row justify-content-end mb-4">
+                                                <div class="p-3 me-3 border" style="border-radius: 27.3px; background-color: rgba(0, 197, 53,.2);">
+                                                    <p class="small mb-0">
+                                                        <i class="fas fa-spinner" style="color: #858796"></i>
+                                                        ONE TIME IMAGE
+                                                    </p>
+                                                </div>
+                                                <img style="border-radius: 50%" src="{{ dbOwnerProfilePicPath }}" class="avatar">
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all fa-2x text-gray-300" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetSentDateTime(item.dateTimeInfos) }}
+                                            </p>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetReadDateTime(item.dateTimeInfos) }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    <!-- Video -->
+                                    {% elif item.ZMESSAGETYPE == 2 %}
+
+                                        {% if item.user is not none %}
+
+                                            <div class="d-flex flex-row justify-content-start mb-4">
+                                                <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
+                                                <div class="ms-3" style="border-radius: 27.3px;">
+                                                    <div class="bg-image">
+                                                        <div class="chatImage">
+                                                            {% if item.mediaPath is not none %}
+                                                                <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
+                                                                    <video controls class="chatMedia">
+                                                                    <source src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" type="video/mp4">
+                                                                </video>
+                                                                </a>
+                                                            {% elif item.mediaPath is none %}
+                                                                <video controls class="chatMedia">
+                                                                    <source src="#" type="video/mp4">
+                                                                </video>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 62px; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ item.receiveDateTime }}
+                                            </p>
+
+                                        {% elif item.user is none %}
+
+                                            <div class="d-flex flex-row justify-content-end mb-4">
+                                                <div class="ms-3" style="border-radius: 15px;">
+                                                    <div class="bg-image">
+                                                        <div style="max-width:450px; width: 100%; margin-right: 17px">
+                                                            {% if item.mediaPath is not none %}
+                                                                <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
+                                                                    <video controls class="chatMedia">
+                                                                    <source src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" type="video/mp4">
+                                                                </video>
+                                                                </a>
+                                                            {% elif item.mediaPath is none %}
+                                                                <video controls class="chatMedia">
+                                                                    <source src="#" type="video/mp4">
+                                                                </video>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <img style="border-radius: 50%" src="{{ dbOwnerProfilePicPath }}" class="avatar">
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all fa-2x text-gray-300" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetSentDateTime(item.dateTimeInfos) }}
+                                            </p>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetReadDateTime(item.dateTimeInfos) }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    <!-- 1 Time view video -->
+                                    {% elif item.ZMESSAGETYPE == 39 %}
+
+                                        {% if item.user is not none %}
+
+                                            <div class="d-flex flex-row justify-content-start mb-4">
+                                                <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
+                                                <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
+                                                    <p class="small mb-0">
+                                                        <i class="fas fa-spinner"  style="color: #858796"></i>
+                                                        ONE TIME VIDEO
+                                                        <br>
+                                                        <i class="fas fa-hourglass" style="color: #858796"></i>
+                                                        Duration: {{ item.duration }} sec
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 62px; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ item.receiveDateTime }}
+                                            </p>
+
+                                        {% elif item.user is none %}
+
+                                            <div class="d-flex flex-row justify-content-end mb-4">
+                                                <div class="p-3 me-3 border" style="border-radius: 27.3px; background-color: rgba(0, 197, 53,.2);">
+                                                    <p class="small mb-0">
+                                                        <i class="fas fa-spinner" style="color: #858796"></i>
+                                                        ONE TIME VIDEO
+                                                        <br>
+                                                        <i class="fas fa-hourglass" style="color: #858796"></i>
+                                                        Duration: {{ item.duration }} sec
+                                                    </p>
+                                                </div>
+                                                <img style="border-radius: 50%" src="{{ dbOwnerProfilePicPath }}" class="avatar">
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all fa-2x text-gray-300" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetSentDateTime(item.dateTimeInfos) }}
+                                            </p>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetReadDateTime(item.dateTimeInfos) }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    <!-- Audio -->
+                                    {% elif item.ZMESSAGETYPE == 3 %}
+
+                                        {% if item.user is not none %}
+
+                                            <div class="d-flex flex-row justify-content-start mb-4">
+                                                <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
+                                                {% if item.mediaPath is not none %}
+                                                    <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
+                                                        <audio controls class="received" style="margin-left:17px" src="{{ '/assets/' + str(item.mediaPath) }}"></audio>
+                                                    </a>
+                                                {% elif item.mediaPath is none %}
+                                                    <audio controls class="received" style="margin-left:17px" src="#"></audio>
+                                                {% endif %}
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 62px; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ item.receiveDateTime }}
+                                            </p>
+
+                                        {% elif item.user is none %}
+
+                                            <div class="d-flex flex-row justify-content-end mb-4">
+                                                {% if item.mediaPath is not none %}
+                                                    <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
+                                                        <audio controls class="received" style="margin-left:17px" src="{{ '/assets/' + str(item.mediaPath) }}"></audio>
+                                                    </a>
+                                                {% elif item.mediaPath is none %}
+                                                    <audio controls class="received" style="margin-left:17px" src="#"></audio>
+                                                {% endif %}
+                                                <img style="border-radius: 50%" src="{{ dbOwnerProfilePicPath }}" class="avatar">
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all fa-2x text-gray-300" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetSentDateTime(item.dateTimeInfos) }}
+                                            </p>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetReadDateTime(item.dateTimeInfos) }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    <!-- Contacts -->
+                                    {% elif item.ZMESSAGETYPE == 4 %}
+
+                                        {% if item.user is not none %}
+
+                                            <div class="d-flex flex-row justify-content-start mb-4">
+                                                <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
+                                                <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
+                                                    <p class="small mb-0">
+                                                        <center><b>VCARD Contact</b></center>
+                                                        <br>
+                                                        <i class="fas fa-user-plus"  style="color: #858796"></i>
+                                                        {{ item.contactName }}
+                                                        <br>
+                                                        <i class="fas fa-phone"  style="color: #858796"></i>
+                                                        {{ vcardTelExtractor(item.vcardString) }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 62px; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ item.receiveDateTime }}
+                                            </p>
+
+                                        {% elif item.user is none %}
+
+                                            <div class="d-flex flex-row justify-content-end mb-4">
+                                                <div class="p-3 me-3 border" style="border-radius: 27.3px; background-color: rgba(0, 197, 53,.2);">
+                                                    <p class="small mb-0">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr></tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td rowspan="2" style><i class="far fa-address-card" style="font-size: 64px; color: #858796"></i></td>
+                                                                        <td><i class="fas fa-user"></i></td>
+                                                                        <td>{{ item.contactName }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><i class="fas fa-phone" style="color: #858796"></i></td>
+                                                                        <td>{{ vcardTelExtractor(item.vcardString) }}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </p>
+                                                </div>
+                                                <img style="border-radius: 50%" src="{{ dbOwnerProfilePicPath }}" class="avatar">
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all fa-2x text-gray-300" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetSentDateTime(item.dateTimeInfos) }}
+                                            </p>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetReadDateTime(item.dateTimeInfos) }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    <!-- Positions -->
+                                    {% elif item.ZMESSAGETYPE == 5 %}
+
+                                        {% if item.user is not none %}
+
+                                            <div class="d-flex flex-row justify-content-start mb-4">
+                                                <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
+                                                <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
+                                                    <a class="btn btn-light btn-icon-split" role="button" href="https://www.google.com/maps/place/{{ item.latitude }},{{ item.longitude }}" target="_blank"><span class="text-black-50 icon"><i class="fas fa-map-marker-alt"></i></span><span class="text-dark text">Google Maps</span></a>
+                                                </div>
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 62px; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ item.receiveDateTime }}
+                                            </p>
+
+                                        {% elif item.user is none %}
+
+                                            <div class="d-flex flex-row justify-content-end mb-4">
+                                                <div class="p-3 me-3 border" style="border-radius: 27.3px; background-color: rgba(0, 197, 53,.2);">
+                                                    <a class="btn btn-light btn-icon-split" role="button" href="https://www.google.com/maps/place/{{ item.latitude }},{{ item.longitude }}" target="_blank"><span class="text-black-50 icon"><i class="fas fa-map-marker-alt"></i></span><span class="text-dark text">Google Maps</span></a>
+                                                </div>
+                                                <img style="border-radius: 50%" src="{{ dbOwnerProfilePicPath }}" class="avatar">
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all fa-2x text-gray-300" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetSentDateTime(item.dateTimeInfos) }}
+                                            </p>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetReadDateTime(item.dateTimeInfos) }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    {% elif item.ZMESSAGETYPE == 15 %}
+
+                                        {% if item.user is not none %}
+                                            <div class="d-flex flex-row justify-content-start mb-4">
+                                                <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
+                                                <div class="ms-3" style="border-radius: 27.3px;">
+                                                    <div class="bg-image">
+                                                        <div style="max-width:150px; width: 100%; margin-right: 17px">
+                                                            {% if item.mediaPath is not none %}
+                                                                <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
+                                                                    <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                                </a>
+                                                            {% elif item.mediaPath is none %}
+                                                                <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 62px; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ item.receiveDateTime }}
+                                            </p>
+
+                                        {% elif item.user is none %}
+
+                                            <div class="d-flex flex-row justify-content-end mb-4">
+                                                <div class="ms-3" style="border-radius: 15px;">
+                                                    <div class="bg-image">
+                                                        <div style="max-width:150px; width: 100%; margin-right: 17px">
+                                                            {% if item.mediaPath is not none %}
+                                                                <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
+                                                                    <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                                </a>
+                                                            {% elif item.mediaPath is none %}
+                                                                <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <img style="border-radius: 50%" src="{{ dbOwnerProfilePicPath }}" class="avatar">
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all fa-2x text-gray-300" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetSentDateTime(item.dateTimeInfos) }}
+                                            </p>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetReadDateTime(item.dateTimeInfos) }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    <!-- Url -->
+                                    {% elif item.ZMESSAGETYPE == 7 %}
+
+                                        {% if item.user is not none %}
+
+                                            <div class="d-flex flex-row justify-content-start mb-4">
+                                                <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
+                                                <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
+                                                    <p class="small mb-0">
+                                                        <i class="fas fa-link"  style="color: #858796"></i>
+                                                        <a href="{{ item.text }}" target="_blank">CLICK TO OPEN LINK</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 62px; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ item.receiveDateTime }}
+                                            </p>
+
+                                        {% elif item.user is none %}
+
+                                            <div class="d-flex flex-row justify-content-end mb-4">
+                                                <div class="p-3 me-3 border" style="border-radius: 27.3px; background-color: rgba(0, 197, 53,.2);">
+                                                    <p class="small mb-0">
+                                                        <i class="fas fa-link" style="color: #858796"></i>
+                                                        <a href="{{ item.text }}" target="_blank">CLICK TO OPEN LINK</a>
+                                                    </p>
+                                                </div>
+                                                <img style="border-radius: 50%" src="{{ dbOwnerProfilePicPath }}" class="avatar">
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all fa-2x text-gray-300" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetSentDateTime(item.dateTimeInfos) }}
+                                            </p>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetReadDateTime(item.dateTimeInfos) }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    <!-- File -->
+                                    {% elif item.ZMESSAGETYPE == 8 %}
+
+                                        {% if item.user is not none %}
+
+                                            <div class="d-flex flex-row justify-content-start mb-4">
+                                                <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
+                                                <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
+                                                    <p class="small mb-0">
+                                                        {% if item.fileExtension == 'pdf' %}
+                                                           <i class="far fa-file-pdf"  style="color: #858796"></i>
+                                                        {% elif item.fileExtension == 'zip' %}
+                                                           <i class="far fa-file-archive"  style="color: #858796"></i>
+                                                        {% elif item.fileExtension == 'wav' or item.fileExtension == 'aiff' %}
+                                                           <i class="far fa-file-audio"  style="color: #858796"></i>
+                                                        {% elif item.fileExtension == 'docx' or item.fileExtension == 'vnd.openxmlformats-officedocument.wordprocessingml.document' %}
+                                                           <i class="far fa-file-word"  style="color: #858796"></i>
+                                                        {% elif item.fileExtension == 'png' or item.fileExtension == 'jpeg' %}
+                                                           <i class="far fa-file-image"  style="color: #858796"></i>
+                                                        {% else %}
+                                                            <i class="fas fa-paperclip"  style="color: #858796"></i>
+                                                        {% endif %}
+                                                        <a href="/assets/{{ item.mediaPath }}" target="_blank">{{ item.text}}</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 62px; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ item.receiveDateTime }}
+                                            </p>
+
+                                        {% elif item.user is none %}
+
+                                            <div class="d-flex flex-row justify-content-end mb-4">
+                                                <div class="p-3 me-3 border" style="border-radius: 27.3px; background-color: rgba(0, 197, 53,.2);">
+                                                    <p class="small mb-0">
+                                                        {% if item.fileExtension == 'pdf' %}
+                                                           <i class="far fa-file-pdf"  style="color: #858796"></i>
+                                                        {% elif item.fileExtension == 'zip' %}
+                                                           <i class="far fa-file-archive"  style="color: #858796"></i>
+                                                        {% elif item.fileExtension == 'wav' or item.fileExtension == 'aiff' %}
+                                                           <i class="far fa-file-audio"  style="color: #858796"></i>
+                                                        {% elif item.fileExtension == 'docx' or item.fileExtension == 'vnd.openxmlformats-officedocument.wordprocessingml.document' %}
+                                                           <i class="far fa-file-word"  style="color: #858796"></i>
+                                                        {% elif item.fileExtension == 'png' or item.fileExtension == 'jpeg' %}
+                                                           <i class="far fa-file-image"  style="color: #858796"></i>
+                                                        {% else %}
+                                                            <i class="fas fa-paperclip"  style="color: #858796"></i>
+                                                        {% endif %}
+                                                        <a href="{{ item.mediaPath }}" target="_blank">{{ item.text}}</a>
+                                                    </p>
+                                                </div>
+                                                <img style="border-radius: 50%" src="{{ dbOwnerProfilePicPath }}" class="avatar">
+                                            </div>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all fa-2x text-gray-300" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetSentDateTime(item.dateTimeInfos) }}
+                                            </p>
+                                            <p style="margin-top: -15px; margin-left: 84.5%; font-size: 11px">
+                                                <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
+                                                </svg>
+                                                {{ GetReadDateTime(item.dateTimeInfos) }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    {% endif %}
+
+
+                                {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="border rounded-circle d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    {% include "footer.html" %}
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

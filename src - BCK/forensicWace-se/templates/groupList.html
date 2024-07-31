@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Forensic Wace</title>
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="../assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../assets/css/--mp---Masonry-Gallery-with-Loader-styles.css">
+    <link rel="stylesheet" href="../assets/css/Features-Cards-icons.css">
+    <link rel="stylesheet" href="../assets/css/Forensic_WACE.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
+    <script>
+        function goToPageTop() {
+            document.body.scrollTop = 0; // Per Safari
+            document.documentElement.scrollTop = 0; // Per Chrome, Firefox, IE e Opera
+        }
+    </script>
+</head>
+
+<body style="background: #f8f9fc;">
+    {% include "navbar.html" %}
+    <hr style="margin-top: 7px;margin-bottom: 13px;">
+    {% if errorMsg %}
+        <div class="row">
+            <div class="col text-center">
+                <div class="alert alert-danger alert-dismissible mx-auto" role="alert" style="width: 90%;"><button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button><a class="btn btn-danger btn-circle ms-1" role="button" style="margin-right: 15px;padding-top: 0px;padding-bottom: 0px;"><i class="fas fa-times text-white"></i></a><span style="font-size: 24px;"><strong>{{ errorMsg }}</strong><br /></span></div>
+            </div>
+        </div>
+    {% endif %}
+    <div id="wrapper">
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div class="container-fluid">
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-dark mb-0"><span style="color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity)) ;">Group List</span></h3><a class="btn btn-primary btn-icon-split" role="button"><span class="text-white-50 icon"><i class="fas fa-file-export"></i></span><span class="text-white text">EXPORT REPORT</span></a>
+                </div>
+                <div class="card shadow">
+                    <div class="card-header py-3">
+                        <p class="text-primary m-0 fw-bold">List of conversations</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
+                            <table class="table my-0" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Group name</th>
+                                        <th>Last message</th>
+                                        <th>Number of messages</th>
+                                        <th>Notification status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in groupListData %}
+                                    <tr>
+                                        <td>{{ item.Group_Name }}</td>
+                                        <td>{{ item.Message_Date }}</td>
+                                        <td>{{ item.Number_of_Messages }}</td>
+                                        {% if item.Is_muted != None %}
+                                        <td><i class="fas fa-volume-mute text-danger" style="font-size: 27px;"></i></td>
+                                        {% elif item.Is_muted == None %}
+                                        <td><i class="fas fa-volume-up text-success" style="font-size: 27px;"></i></td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td><strong>Group name</strong></td>
+                                        <td><strong>Last message</strong></td>
+                                        <td><strong>Number of messages</strong></td>
+                                        <td><strong>Notification status</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><a class="border rounded-circle d-inline scroll-to-top" onclick="goToPageTop()"><i class="fas fa-angle-up"></i></a>
+    </div>
+    {% include "footer.html" %}
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

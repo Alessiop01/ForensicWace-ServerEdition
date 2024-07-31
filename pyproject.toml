@@ -25,7 +25,7 @@ dependencies = [
 ]
 
 [project.scripts]
-forensic-wace-se = "forensicWace-se.main:main"
+forensic-wace-se = "forensicWace_SE.main:main"
 
 [build-system]
 requires = ["setuptools", "setuptools-scm"]

@@ -1,8 +1,8 @@
 import os
 
-import utils
-import certification
-import globalConstants
+import forensicWace_SE.utils as utils
+import forensicWace_SE.certification as certification
+import forensicWace_SE.globalConstants as globalConstants
 
 from reportlab.lib.pagesizes import landscape, A4
 from reportlab.lib import colors

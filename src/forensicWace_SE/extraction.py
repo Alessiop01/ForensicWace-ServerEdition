@@ -2,8 +2,8 @@ import plistlib
 import os
 import sqlite3
 
-import utils
-import globalConstants
+import forensicWace_SE.utils as utils
+import forensicWace_SE.globalConstants as globalConstants
 
 # Backup info file names
 iosInfoFiles = {

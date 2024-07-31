@@ -3,7 +3,7 @@ import os
 import re
 import binascii
 
-import globalConstants
+import forensicWace_SE.globalConstants as globalConstants
 
 from datetime import datetime, timezone
 from protobuf_decoder.protobuf_decoder import Parser

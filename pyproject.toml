@@ -1,0 +1,39 @@
+[project]
+name = "ForensicWace-SE"
+description = "Forensic WACE SE - Forensic WhatsApp Chat Extractor Server Edition"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Windows",
+]
+version = "1.0.0"
+
+dependencies = [
+    "tensorflow",
+    "Pillow",
+    "cryptography",
+    "Flask",
+    "rfc3161ng",
+    "vobject",
+    "iOSbackup",
+    "reportlab",
+    "protobuf-decoder",
+    "iOSbackup",
+    "bleach"
+]
+
+[project.scripts]
+forensic-wace-se = "forensicWace_SE.main:main"
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+namespaces = true
+where = ["src"]
+
+[tool.setuptools.package-data]
+"forensicWace_SE.assets" = ["*.*"]

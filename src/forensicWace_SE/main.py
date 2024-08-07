@@ -3,10 +3,10 @@ from flask import Flask, render_template, request, redirect, url_for, send_file
 import os
 
 # Import Custom Modules
-import extraction
-import utils
-import globalConstants
-import reporting
+import forensicWace_SE.extraction as extraction
+import forensicWace_SE.utils as utils
+import forensicWace_SE.globalConstants as globalConstants
+import forensicWace_SE.reporting as reporting
 
 app = Flask(__name__, static_folder='/')
 

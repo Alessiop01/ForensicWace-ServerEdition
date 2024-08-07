@@ -3,7 +3,7 @@ import rfc3161ng
 import zipfile
 import tempfile
 
-import utils
+import forensicWace_SE.utils as utils
 
 basePath = os.path.dirname(os.path.abspath(__file__)).replace('\\','/')
 

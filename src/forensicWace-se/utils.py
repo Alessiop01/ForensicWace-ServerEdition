@@ -189,3 +189,18 @@ def DeleteFilesIfExist(filePathArray):
             print(f"Deleted file: {filePath}")
         else:
             print(f"File not found: {filePath}")
+
+def VcardTelExtractor(vcardText):
+    # Pattern to extract phone number
+    phoneNumberPattern = re.compile(r"TEL(?:;[^:]*):(\+?\d+(?: \d+)*)")
+
+    # Retrieve all phone numbers in VCARD
+    phoneNumber = phoneNumberPattern.findall(vcardText)
+
+    print("Retrieved phone number:")
+    print(phoneNumber)
+
+    if not phoneNumber:
+        phoneNumber = ["Number not available"]
+
+    return phoneNumber

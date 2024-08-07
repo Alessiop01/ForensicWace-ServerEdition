@@ -190,7 +190,7 @@ def PrivateChat():
         if request.form['phoneNumber'] is None or request.form['phoneNumber'] == '':
             return render_template('insertPhoneNumber.html', errorMsg=globalConstants.invalidPhoneNumberErrorMsg)
 
-        # Convert retrieved messageType from string to integer in is a number
+        # Convert retrieved messageType from string to integer if is a number
         if retrievedMessageType != -1:
             if retrievedMessageType.isdigit():
                 messageType = int(retrievedMessageType)
@@ -255,7 +255,8 @@ def PrivateChat():
                                    stickerMediaType=globalConstants.stickerMediaType,
                                    urlMediaType=globalConstants.urlMediaType,
                                    fileMediaType=globalConstants.fileMediaType,
-                                   warningFilteredMsg=warningFilteredMsg
+                                   warningFilteredMsg=warningFilteredMsg,
+                                   VcardTelExtractor = utils.VcardTelExtractor
                                    )
 # endregion
 
@@ -472,7 +473,7 @@ def GroupChat():
                                fileMediaType=globalConstants.fileMediaType,
                                warningFilteredMsg=warningFilteredMsg,
                                formatPhoneNumber=utils.FormatPhoneNumberForPageTables,
-                               vcardTelExtractor=""
+                               vcardTelExtractor=utils.VcardTelExtractor
                                )
 
 # endregion

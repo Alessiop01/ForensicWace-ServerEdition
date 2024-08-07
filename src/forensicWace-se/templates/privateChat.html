@@ -636,15 +636,26 @@
                                             <div class="d-flex flex-row justify-content-start mb-4">
                                                 <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
                                                 <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
-                                                    <p class="small mb-0">
-                                                        <center><b>VCARD Contact</b></center>
-                                                        <br>
-                                                        <i class="fas fa-user-plus"  style="color: #858796"></i>
-                                                        {{ item.contactName }}
-                                                        <br>
-                                                        <i class="fas fa-phone"  style="color: #858796"></i>
-                                                        {{ vcardTelExtractor(item.vcardString) }}
-                                                    </p>
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr></tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="2" style><i class="far fa-address-card" style="font-size: 64px; color: #858796"></i></td>
+                                                                    <td><i class="fas fa-user"></i></td>
+                                                                    <td>{{ item.contactName }}</td>
+                                                                </tr>
+                                                               {% for phoneNumber in VcardTelExtractor(item.vcardString) %}
+                                                                <tr>
+                                                                    <td><i class="fas fa-phone" style="color: #858796"></i></td>
+                                                                    <td>{{ phoneNumber }}</td>
+                                                                </tr>
+                                                                {%  endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <p style="margin-top: -15px; margin-left: 62px; font-size: 11px">
@@ -670,10 +681,12 @@
                                                                         <td><i class="fas fa-user"></i></td>
                                                                         <td>{{ item.contactName }}</td>
                                                                     </tr>
+                                                                   {% for phoneNumber in VcardTelExtractor(item.vcardString) %}
                                                                     <tr>
                                                                         <td><i class="fas fa-phone" style="color: #858796"></i></td>
-                                                                        <td>{{ vcardTelExtractor(item.vcardString) }}</td>
+                                                                        <td>{{ phoneNumber }}</td>
                                                                     </tr>
+                                                                    {%  endfor %}
                                                                 </tbody>
                                                             </table>
                                                         </div>

@@ -26,6 +26,16 @@ def GetDeviceExtractionList(deviceExtractionPath):
     - Backup date and time"""
     toReturnList = []
 
+    if not os.path.exists(deviceExtractionPath):
+        print(f"[GetDeviceExtractionList] - Path {deviceExtractionPath} does NOT exist")
+        return toReturnList
+
+    # Check if contains subfolders
+    subfolders = [f.name for f in os.scandir(deviceExtractionPath) if f.is_dir()]
+
+    if not subfolders:
+        return toReturnList
+
     if deviceExtractionPath:
         (_, dirNames, _) = next(os.walk(deviceExtractionPath))
 

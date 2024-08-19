@@ -10,8 +10,11 @@ import forensicWace_SE.reporting as reporting
 
 app = Flask(__name__, static_folder='/')
 
+# Retrieve base Path
+basePath = os.path.dirname(os.path.abspath(__file__))
+
 # Configure each folder into the app
-app.config['deviceExtractions_FOLDER'] = globalConstants.deviceExtractions_FOLDER
+app.config['deviceExtractions_FOLDER'] = os.path.join(basePath, globalConstants.deviceExtractions_FOLDER)
 app.config['assetsImage_FOLDER'] = globalConstants.assetsImage_FOLDER
 
 # Dictionary to store all the variables and data for each connected host

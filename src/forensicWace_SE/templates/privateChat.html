@@ -360,11 +360,11 @@
                                                     <div class="bg-image">
                                                         <div class="chatImage">
                                                             {% if item.mediaPath is not none %}
-                                                                <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
-                                                                    <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                                <a target="_blank" href="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}">
+                                                                    <img src="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
                                                                 </a>
                                                             {% elif item.mediaPath is none %}
-                                                                <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                                <img src="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
                                                             {% endif %}
                                                         </div>
                                                     </div>
@@ -384,11 +384,11 @@
                                                     <div class="bg-image">
                                                         <div style="max-width:450px; width: 100%; margin-right: 17px">
                                                             {% if item.mediaPath is not none %}
-                                                                <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
-                                                                    <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                                <a target="_blank" href="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}">
+                                                                    <img src="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
                                                                 </a>
                                                             {% elif item.mediaPath is none %}
-                                                                <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                                <img src="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
                                                             {% endif %}
                                                         </div>
                                                     </div>
@@ -468,9 +468,9 @@
                                                     <div class="bg-image">
                                                         <div class="chatImage">
                                                             {% if item.mediaPath is not none %}
-                                                                <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
+                                                                <a target="_blank" href="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}">
                                                                     <video controls class="chatMedia">
-                                                                    <source src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" type="video/mp4">
+                                                                    <source src="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}" type="video/mp4">
                                                                 </video>
                                                                 </a>
                                                             {% elif item.mediaPath is none %}
@@ -496,9 +496,9 @@
                                                     <div class="bg-image">
                                                         <div style="max-width:450px; width: 100%; margin-right: 17px">
                                                             {% if item.mediaPath is not none %}
-                                                                <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
+                                                                <a target="_blank" href="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}">
                                                                     <video controls class="chatMedia">
-                                                                    <source src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" type="video/mp4">
+                                                                    <source src="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}" type="video/mp4">
                                                                 </video>
                                                                 </a>
                                                             {% elif item.mediaPath is none %}
@@ -587,7 +587,7 @@
                                             <div class="d-flex flex-row justify-content-start mb-4">
                                                 <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ userProfilePicPath }}">
                                                 {% if item.mediaPath is not none %}
-                                                    <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
+                                                    <a target="_blank" href="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}">
                                                         <audio controls class="received" style="margin-left:17px" src="{{ '/assets/' + str(item.mediaPath) }}"></audio>
                                                     </a>
                                                 {% elif item.mediaPath is none %}
@@ -605,7 +605,7 @@
 
                                             <div class="d-flex flex-row justify-content-end mb-4">
                                                 {% if item.mediaPath is not none %}
-                                                    <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
+                                                    <a target="_blank" href="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}">
                                                         <audio controls class="received" style="margin-left:17px" src="{{ '/assets/' + str(item.mediaPath) }}"></audio>
                                                     </a>
                                                 {% elif item.mediaPath is none %}
@@ -759,11 +759,11 @@
                                                     <div class="bg-image">
                                                         <div style="max-width:150px; width: 100%; margin-right: 17px">
                                                             {% if item.mediaPath is not none %}
-                                                                <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
-                                                                    <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                                <a target="_blank" href="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}">
+                                                                    <img src="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
                                                                 </a>
                                                             {% elif item.mediaPath is none %}
-                                                                <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                                <img src="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
                                                             {% endif %}
                                                         </div>
                                                     </div>
@@ -783,11 +783,11 @@
                                                     <div class="bg-image">
                                                         <div style="max-width:150px; width: 100%; margin-right: 17px">
                                                             {% if item.mediaPath is not none %}
-                                                                <a target="_blank" href="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}">
-                                                                    <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                                <a target="_blank" href="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}">
+                                                                    <img src="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
                                                                 </a>
                                                             {% elif item.mediaPath is none %}
-                                                                <img src="{{ GetMediaFromBackup(deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
+                                                                <img src="{{ GetMediaFromBackup(basePath, deviceUdid, item.mediaPath, True, False) }}" class="chatMedia">
                                                             {% endif %}
                                                         </div>
                                                     </div>

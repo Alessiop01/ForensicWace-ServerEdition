@@ -4,7 +4,7 @@ assetsImage_FOLDER = 'assets/img'
 
 # Files Path
 defaultDatabase_PATH = '/7c/7c7fba66680ef796b916b067077cc246adacf01d'   # SQLite Database file is called by default '7c7fba66680ef796b916b067077cc246adacf01d' and it is stored under the '7c' folder inside the device backup
-manifestDBFile = 'manifest.db'
+manifestDBFile = 'Manifest.db'
 
 # WhatsApp variables
 WhatsAppDomain = 'AppDomainGroup-group.net.whatsapp.WhatsApp.shared'

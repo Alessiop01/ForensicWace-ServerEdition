@@ -15,7 +15,7 @@ basePath = os.path.dirname(os.path.abspath(__file__))
 
 # Configure each folder into the app
 app.config['deviceExtractions_FOLDER'] = os.path.join(basePath, globalConstants.deviceExtractions_FOLDER)
-app.config['assetsImage_FOLDER'] = globalConstants.assetsImage_FOLDER
+app.config['assetsImage_FOLDER'] = os.path.join(basePath, globalConstants.assetsImage_FOLDER)
 
 # Dictionary to store all the variables and data for each connected host
 hostsData = {}
@@ -59,7 +59,7 @@ def Index():
                                url_for=url_for
                                )
     else:
-        databasePath = globalConstants.deviceExtractions_FOLDER + "/" + hostsData[clientId]['udid'] + globalConstants.defaultDatabase_PATH
+        databasePath = basePath + "/" + globalConstants.deviceExtractions_FOLDER + "/" + hostsData[clientId]['udid'] + globalConstants.defaultDatabase_PATH
 
         databaseSHA256 = utils.CalculateSHA256(databasePath)
         databaseMD5 = utils.CalculateMD5(databasePath)
@@ -134,7 +134,7 @@ def ChatList():
     if clientId in hostsData and 'chatListData' in hostsData[clientId]:
         chatListData = hostsData[clientId]['chatListData']
     else:
-        chatListData, errorMsg = extraction.GetChatList(hostsData[clientId]['udid'])
+        chatListData, errorMsg = extraction.GetChatList(basePath, hostsData[clientId]['udid'])
         AddOrUpdateHostData(clientId, {"chatListData": chatListData})
 
     if errorMsg:
@@ -159,7 +159,7 @@ def ExportChatList():
     if clientId in hostsData and 'chatListData' in hostsData[clientId]:
         chatListData = hostsData[clientId]['chatListData']
     else:
-        chatListData, errorMsg = extraction.GetChatList(hostsData[clientId]['udid'])
+        chatListData, errorMsg = extraction.GetChatList(basePath, hostsData[clientId]['udid'])
         AddOrUpdateHostData(clientId, {"chatListData": chatListData})
 
     generatedReportZip = reporting.ExportChatList(hostsData[clientId]['udid'], chatListData)
@@ -198,10 +198,10 @@ def PrivateChat():
             if retrievedMessageType.isdigit():
                 messageType = int(retrievedMessageType)
 
-        chatCounters, messages, errorMsg = extraction.GetPrivateChat(hostsData[clientId]['udid'], phoneNumber[-10:])  # phoneNumber[-10:] --> Pass the last 10 characters inserted
+        chatCounters, messages, errorMsg = extraction.GetPrivateChat(basePath, hostsData[clientId]['udid'], phoneNumber[-10:])  # phoneNumber[-10:] --> Pass the last 10 characters inserted
 
-        userProfilePicPath = extraction.GetMediaFromBackup(deviceUdid, phoneNumber[-10:], False, True)
-        dbOwnerProfilePicPath = extraction.GetMediaFromBackup(deviceUdid, 'Photo', False, True)
+        userProfilePicPath = extraction.GetMediaFromBackup(basePath, deviceUdid, phoneNumber[-10:], False, True)
+        dbOwnerProfilePicPath = extraction.GetMediaFromBackup(basePath, deviceUdid, 'Photo', False, True)
 
         warningFilteredMsg = None
 
@@ -259,7 +259,8 @@ def PrivateChat():
                                    urlMediaType=globalConstants.urlMediaType,
                                    fileMediaType=globalConstants.fileMediaType,
                                    warningFilteredMsg=warningFilteredMsg,
-                                   VcardTelExtractor = utils.VcardTelExtractor
+                                   VcardTelExtractor = utils.VcardTelExtractor,
+                                   basePath = basePath
                                    )
 # endregion
 
@@ -273,7 +274,7 @@ def GpsLocations():
     if clientId not in hostsData:
         return redirect(url_for('Index'))
 
-    gpsData, errorMsg = extraction.GetGpsData(hostsData[clientId]['udid'])
+    gpsData, errorMsg = extraction.GetGpsData(basePath, hostsData[clientId]['udid'])
 
     if errorMsg:
         return render_template('gpsLocations.html',
@@ -294,7 +295,7 @@ def ExportGpsLocations():
     if clientId not in hostsData:
         return redirect(url_for('Index'))
 
-    gpsData, errorMsg = extraction.GetGpsData(hostsData[clientId]['udid'])
+    gpsData, errorMsg = extraction.GetGpsData(basePath, hostsData[clientId]['udid'])
 
     generatedReportZip = reporting.ExportGpsLocations(hostsData[clientId]['udid'], gpsData)
 
@@ -312,7 +313,7 @@ def BlockedContacts():
     if clientId not in hostsData:
         return redirect(url_for('Index'))
 
-    blockedContactsData, errorMsg = extraction.GetBlockedContacts(hostsData[clientId]['udid'])
+    blockedContactsData, errorMsg = extraction.GetBlockedContacts(basePath, hostsData[clientId]['udid'])
 
     if errorMsg:
         return render_template('blockedContacts.html',
@@ -333,7 +334,7 @@ def ExportBlockedContacts():
     if clientId not in hostsData:
         return redirect(url_for('Index'))
 
-    blockedContactsData, errorMsg = extraction.GetBlockedContacts(hostsData[clientId]['udid'])
+    blockedContactsData, errorMsg = extraction.GetBlockedContacts(basePath, hostsData[clientId]['udid'])
 
     generatedReportZip = reporting.ExportBlockedContactsReport(hostsData[clientId]['udid'], blockedContactsData)
 
@@ -421,9 +422,9 @@ def GroupChat():
             messageType = int(retrievedMessageType)
         print("messageType", messageType)
 
-        chatCounters, messages, errorMsg = extraction.GetGroupChat(hostsData[clientId]['udid'], groupName)
+        chatCounters, messages, errorMsg = extraction.GetGroupChat(basePath, hostsData[clientId]['udid'], groupName)
 
-        dbOwnerProfilePicPath = extraction.GetMediaFromBackup(deviceUdid, 'Photo', False, True)
+        dbOwnerProfilePicPath = extraction.GetMediaFromBackup(basePath, deviceUdid, 'Photo', False, True)
 
         warningFilteredMsg = None
 
@@ -476,7 +477,8 @@ def GroupChat():
                                fileMediaType=globalConstants.fileMediaType,
                                warningFilteredMsg=warningFilteredMsg,
                                formatPhoneNumber=utils.FormatPhoneNumberForPageTables,
-                               vcardTelExtractor=utils.VcardTelExtractor
+                               vcardTelExtractor=utils.VcardTelExtractor,
+                               basePath = basePath
                                )
 
 # endregion

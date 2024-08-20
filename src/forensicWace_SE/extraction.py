@@ -99,23 +99,23 @@ def ExecuteQuery(databasePath, query):
     return extractedData, errorMsg
 
 
-def GetChatList(deviceUdid):
+def GetChatList(basePath, deviceUdid):
     """Returns a list of object containing the information about the list of available chats in the device backup.
     Returns also an error message in case an error occurs during extraction.
     The function takes the device UDID as input in order to select the correct database from which extract the infos."""
     query = globalConstants.queryChatList
 
-    databasePath = globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
+    databasePath = basePath + "/" + globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
 
     extractedData, errorMsg = ExecuteQuery(databasePath, query)
 
     return extractedData, errorMsg
 
 
-def GetPrivateChat(deviceUdid, phoneNumber):
+def GetPrivateChat(basePath, deviceUdid, phoneNumber):
     countersQuery = globalConstants.queryPrivateChatCountersPT1 + phoneNumber + globalConstants.queryPrivateChatCountersPT2
 
-    databasePath = globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
+    databasePath = basePath + "/" + globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
 
     chatCounters, errorMsg = ExecuteQuery(databasePath, countersQuery)
 
@@ -126,27 +126,27 @@ def GetPrivateChat(deviceUdid, phoneNumber):
     return chatCounters, messages, errorMsg
 
 
-def GetGpsData(deviceUdid):
+def GetGpsData(basePath, deviceUdid):
     """Returns a list of object containing the information about the gps locations extracted from the device backup.
     The list of gps data includes gps locations received and sent by the database owner.
     Returns also an error message in case an error occurs during extraction.
     The function takes the device UDID as input in order to select the correct database from which extract the infos."""
     query = globalConstants.queryGpsData
 
-    databasePath = globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
+    databasePath = basePath + "/" + globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
 
     extractedData, errorMsg = ExecuteQuery(databasePath, query)
 
     return extractedData, errorMsg
 
 
-def GetBlockedContacts(deviceUdid):
+def GetBlockedContacts(basePath, deviceUdid):
     """Returns a list of object containing the information about the blocked contacts extracted from the device backup.
     Returns also an error message in case an error occurs during extraction.
     The function takes the device UDID as input in order to select the correct database from which extract the infos."""
     query = globalConstants.queryBlockedContacts
 
-    databasePath = globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
+    databasePath = basePath + "/" + globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
 
     extractedData, errorMsg = ExecuteQuery(databasePath, query)
 
@@ -159,17 +159,17 @@ def GetGroupList(deviceUdid):
     The function takes the device UDID as input in order to select the correct database from which extract the infos."""
     query = globalConstants.queryGroupList
 
-    databasePath = globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
+    databasePath = basePath + "/" + globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
 
     extractedData, errorMsg = ExecuteQuery(databasePath, query)
 
     return extractedData, errorMsg
 
 
-def GetGroupChat(deviceUdid, groupName):
+def GetGroupChat(basePath, deviceUdid, groupName):
     countersQuery = globalConstants.queryGroupChatCountersPT1 + groupName + globalConstants.queryGroupChatCountersPT2
 
-    databasePath = globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
+    databasePath = basePath + "/" + globalConstants.deviceExtractions_FOLDER + "/" + deviceUdid + globalConstants.defaultDatabase_PATH
 
     chatCounters, errorMsg = ExecuteQuery(databasePath, countersQuery)
 
@@ -181,11 +181,13 @@ def GetGroupChat(deviceUdid, groupName):
 
 
 # noinspection SqlNoDataSourceInspection
-def GetMediaFromBackup(deviceUdid, filePath, isChatMedia, isProfilePic):
+def GetMediaFromBackup(basePath, deviceUdid, filePath, isChatMedia, isProfilePic):
 
     imagePath = None
 
-    with sqlite3.connect(os.path.join(globalConstants.deviceExtractions_FOLDER, deviceUdid, "Manifest.db")) as manifest:
+    manifestDBFilePath = basePath + "/" + os.path.join(globalConstants.deviceExtractions_FOLDER, deviceUdid, globalConstants.manifestDBFile)
+
+    with sqlite3.connect(manifestDBFilePath) as manifest:
         manifest.row_factory = sqlite3.Row
         c = manifest.cursor()
         if isChatMedia:

@@ -483,6 +483,12 @@ def GroupChat():
 
 # endregion
 
+# region /DiscoverMore
+@app.route('/DiscoverMore')
+def DiscoverMore():
+    return render_template('discoverMore.html')
+# endregion
+
 # endregion
 
 def main():

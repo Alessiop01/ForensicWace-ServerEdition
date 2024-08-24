@@ -61,7 +61,7 @@
                                         <td>{{ formatPhoneNumber(item.PhoneNumber) }}</td>
                                         <td>{{ item.NumberOfMessages }}</td>
                                         <td>{{ item.MessageDate }}</td>
-                                        <td style="display: none"><form id="{{ item.PhoneNumber }}" action="/PrivateChat" method="post"><input type="tel" id="phoneNumber" name="phoneNumber" value="{{ item.PhoneNumber }}"></form></td>
+                                        <td style="display: none"><form id="{{ item.PhoneNumber }}" action="/PrivateChat" method="post"><input type="tel" id="phoneNumber" name="phoneNumber" value="{{ item.PhoneNumber }}"><input type="tel" id="messageType" name="messageType" value="0"></form></td>
                                         <td style="width: 200px;"><a class="btn btn-light btn-icon-split" role="button" onclick="document.getElementById('{{ item.PhoneNumber }}').submit();" target="_blank"><span class="text-black-50 icon"><i class="fas fa-comments"></i></span><span class="text-dark text">Open</span></a></td>
                                     </tr>
                                 {% endfor %}

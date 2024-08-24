@@ -16,7 +16,7 @@ from io import BytesIO
 basePath = os.path.dirname(os.path.abspath(__file__)).replace('\\', '/')
 
 
-def CreateHorizontalDocHeaderAndFooter(canvas):
+def CreateHorizontalDocHeaderAndFooter(canvas, doc):
     canvas.saveState()
     canvas.restoreState()
     page_num = canvas.getPageNumber()
@@ -25,9 +25,10 @@ def CreateHorizontalDocHeaderAndFooter(canvas):
     canvas.line(15 * mm, 25 * mm, 282 * mm, 25 * mm)
 
 
-def CreateVerticalDocHeaderAndFooter(canvas):
+def CreateVerticalDocHeaderAndFooter(canvas, doc):
     canvas.saveState()
     canvas.drawImage(basePath + "/assets/img/Logo.png", A4[0] / 2 - 158, A4[1] - 65, width=300, height=52.5)
+    print(basePath + "/assets/img/Logo.png")
     canvas.restoreState()
     page_num = canvas.getPageNumber()
     text = "Page %s" % page_num

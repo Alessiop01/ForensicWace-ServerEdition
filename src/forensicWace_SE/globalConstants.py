@@ -53,5 +53,10 @@ pollMediaType = 46
 
 # Report name
 GpsDataReport = "-GpsLocations"
-ChatListReport = "-ChatListReport"
+ChatListReport = "-ChatList"
 BlockedContactsReport = "-BlockedContacts"
+GroupListReport = "-GroupList"
+
+# Group notification status
+Enabled = "ENABLED"
+Disabled = "DISABLED"

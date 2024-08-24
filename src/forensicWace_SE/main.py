@@ -369,6 +369,25 @@ def GroupList():
                                errorMsg=errorMsg,
                                groupListData=groupListData,
                                formatPhoneNumber=utils.FormatPhoneNumberForPageTables)
+
+@app.route('/ExportGroupList')
+def ExportGroupList():
+    # Retrieve remote hostId
+    clientId = request.remote_addr
+
+    if clientId not in hostsData:
+        return redirect(url_for('Index'))
+
+    if clientId in hostsData and 'groupListData' in hostsData[clientId]:
+        groupListData = hostsData[clientId]['groupListData']
+
+    else:
+        groupListData, errorMsg = extraction.GetGroupList(basePath, hostsData[clientId]['udid'])
+        AddOrUpdateHostData(clientId, {"groupListData": groupListData})
+
+    generatedReportZip = reporting.ExportGroupList(hostsData[clientId]['udid'], groupListData)
+
+    return send_file(generatedReportZip, as_attachment=True)
 # endregion
 
 

@@ -208,3 +208,66 @@ def ExportBlockedContactsReport(udid, extractedDataList):
 
     # Return generated file
     return certificatedReportZip
+
+def ExportGroupList(udid, extractedDataList):
+
+    # Define data structure
+    data = [["GroupName", "LastMessage", "NumberOfMessages", "NotificationStatus"]]
+
+    # Foreach extracted data, add it into the previous defined structure
+    for extractedData in extractedDataList:
+        groupNotificationStatus = globalConstants.Enabled
+
+        # If the field contains a value, then the group has been muted
+        if extractedData["Is_muted"] is not None:
+            groupNotificationStatus = globalConstants.Disabled
+
+        data.append([extractedData["Group_Name"],
+                     extractedData["Message_Date"],
+                     extractedData["Number_of_Messages"],
+                     groupNotificationStatus])
+
+    buffer = BytesIO()
+
+    # Configure the document
+    doc = SimpleDocTemplate(buffer, pagesize=A4)
+
+    # Define an array to store all the elements to be printed in the output file
+    fileElements = []
+
+    # Define table structure
+    table = Table(data, colWidths=[100, 110, 110, 110])
+
+    # Define style of the table
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 10),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 11),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+        ('ALIGN', (0, 1), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 1), (-1, -1), 8),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 6),
+    ])
+
+    # Apply style to the created table
+    table.setStyle(style)
+
+    # Add the table to the output document
+    fileElements.append(table)
+
+    # Build the output PDF file
+    doc.build(fileElements, onFirstPage=CreateVerticalDocHeaderAndFooter, onLaterPages=CreateVerticalDocHeaderAndFooter)
+
+    # Move buffer to initial position
+    buffer.seek(0)
+
+    # Certificate the output report
+    certificatedReportZip = certification.CertificateReportAndZipFiles(udid, buffer.getvalue(), globalConstants.GroupListReport)
+
+    # Return generated file
+    return certificatedReportZip

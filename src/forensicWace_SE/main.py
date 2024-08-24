@@ -356,7 +356,7 @@ def GroupList():
     if clientId in hostsData and 'groupListData' in hostsData[clientId]:
         groupListData = hostsData[clientId]['groupListData']
     else:
-        groupListData, errorMsg = extraction.GetGroupList(hostsData[clientId]['udid'])
+        groupListData, errorMsg = extraction.GetGroupList(basePath, hostsData[clientId]['udid'])
         AddOrUpdateHostData(clientId, {"groupListData": groupListData})
 
     if errorMsg is not None:
@@ -386,7 +386,7 @@ def SelectGroup():
     if clientId in hostsData and 'groupListData' in hostsData[clientId]:
         groupListData = hostsData[clientId]['groupListData']
     else:
-        groupListData, errorMsg = extraction.GetGroupList(hostsData[clientId]['udid'])
+        groupListData, errorMsg = extraction.GetGroupList(basePath, hostsData[clientId]['udid'])
         AddOrUpdateHostData(clientId, {"groupListData": groupListData})
 
     if errorMsg:
@@ -420,7 +420,6 @@ def GroupChat():
         # Convert retrieved messageType from string to integer in is a number
         if retrievedMessageType.isdigit():
             messageType = int(retrievedMessageType)
-        print("messageType", messageType)
 
         chatCounters, messages, errorMsg = extraction.GetGroupChat(basePath, hostsData[clientId]['udid'], groupName)
 

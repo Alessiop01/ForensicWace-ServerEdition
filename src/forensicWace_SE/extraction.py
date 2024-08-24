@@ -153,7 +153,7 @@ def GetBlockedContacts(basePath, deviceUdid):
     return extractedData, errorMsg
 
 
-def GetGroupList(deviceUdid):
+def GetGroupList(basePath, deviceUdid):
     """Returns a list of object containing the information about the list of available group chats in the device backup.
     Returns also an error message in case an error occurs during extraction.
     The function takes the device UDID as input in order to select the correct database from which extract the infos."""
@@ -223,7 +223,7 @@ def GetMediaFromBackup(basePath, deviceUdid, filePath, isChatMedia, isProfilePic
             flags = row["flags"]
             if flags == 1:
                 imagePath = os.path.join(globalConstants.deviceExtractions_FOLDER, deviceUdid, folder, hashes)
-                print(imagePath)
+                #print(imagePath) // Enable only for DEBUG purposes
                 break
             row = c.fetchone()
 

@@ -28,7 +28,6 @@ def CreateHorizontalDocHeaderAndFooter(canvas, doc):
 def CreateVerticalDocHeaderAndFooter(canvas, doc):
     canvas.saveState()
     canvas.drawImage(basePath + "/assets/img/Logo.png", A4[0] / 2 - 158, A4[1] - 65, width=300, height=52.5)
-    print(basePath + "/assets/img/Logo.png")
     canvas.restoreState()
     page_num = canvas.getPageNumber()
     text = "Page %s" % page_num

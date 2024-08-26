@@ -10,6 +10,8 @@ Welcome to the repository of Forensic Wace Server Edition, an upgrade of my Bach
 /_/    \____/_/   \___/_/ /_/____/_/\___/     |__/|__/\__,_/\___/\___/ 
 ```
 
+![Logo.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FLogo.png)
+
 ## Installation
 
 In order to start using the Forensic Wace Server Edition you need to install it.

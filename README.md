@@ -2,14 +2,6 @@
 
 Welcome to the repository of Forensic Wace Server Edition, an upgrade of my Bachelor's thesis project in Computer Forensics. This project represents the result of my study focused on the extraction of chats and other informations contained inside the whatsapp database, extracted from Apple iOS devices.
 
-```
-    ______                           _         _       __              
-   / ____/___  ________  ____  _____(_)____   | |     / /___ _________ 
-  / /_  / __ \/ ___/ _ \/ __ \/ ___/ / ___/   | | /| / / __ `/ ___/ _ \
- / __/ / /_/ / /  /  __/ / / (__  ) / /__     | |/ |/ / /_/ / /__/  __/
-/_/    \____/_/   \___/_/ /_/____/_/\___/     |__/|__/\__,_/\___/\___/ 
-```
-
 ![Logo.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FLogo.png)
 
 ## Installation

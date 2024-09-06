@@ -21,6 +21,8 @@ To start the Forensic Wace GUI, execute the command below in any terminal window
 forensic-wace-se
 ```
 
+Once the command to start the tool has been run on the server machine on which it will run, a web browser is needed to access the GUI. It is recommended to use Google Chrome as browser.
+
 ## Disclaimer
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

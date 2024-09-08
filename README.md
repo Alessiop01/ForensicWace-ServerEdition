@@ -29,7 +29,28 @@ Once the command to start the tool has been run on the server machine on which i
 ### Homepage after selecting Device backup
 ![Homepage.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FGitHub%20Screen%2FHomepage.png)
 
-### Change logo
+### Chat List page
+![Chat List.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FGitHub%20Screen%2FChat%20List.png)
+
+### Select Phone Number page
+![Select Phone Number.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FGitHub%20Screen%2FSelect%20Phone%20Number.png)
+
+### Private Chat page
+![Private Chat.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FGitHub%20Screen%2FPrivate%20Chat.png)
+
+### GPS Locations page
+![GPS Locations.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FGitHub%20Screen%2FGPS%20Locations.png)
+
+### Blocked Contacts page
+![Blocked Contacts.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FGitHub%20Screen%2FBlocked%20Contacts.png)
+
+### Group List page
+![Group List.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FGitHub%20Screen%2FGroup%20List.png)
+
+### Group Chat page
+![Group Chat.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FGitHub%20Screen%2FGroup%20Chat.png)
+
+### Change logo page
 ![Change Logo.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FGitHub%20Screen%2FChange%20Logo.png)
 
 ## Disclaimer

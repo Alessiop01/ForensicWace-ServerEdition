@@ -226,7 +226,6 @@
                         </div>
                     </div>
                 </div>
-                <a class="btn btn-primary btn-lg open-modal" role="button" data-target="myModal">Launch Demo Modal</a>
                 <div class="row">
                     <div class="col">
                         <div id="accordion-2" class="accordion" role="tablist" style="margin-bottom: 24px;">
@@ -270,7 +269,7 @@
                                         {% endif %}
                                         </p>
                                         <div class="d-flex flex-row justify-content-start mb-4">
-                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(deviceUdid, item.user[-10:], False, True) }}">
+                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(basePath, deviceUdid, item.user[-10:], False, True) }}">
                                             <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
                                                 <p class="small mb-0">
                                                     {% if item.text is not none %}
@@ -326,7 +325,7 @@
                                         {% endif %}
                                         </p>
                                         <div class="d-flex flex-row justify-content-start mb-4">
-                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(deviceUdid, item.user[-10:], False, True) }}">
+                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(basePath, deviceUdid, item.user[-10:], False, True) }}">
                                             <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
                                                 <p class="small mb-0">
                                                     <i class="fas fa-trash"  style="color: #858796"></i>
@@ -380,7 +379,7 @@
                                         {% endif %}
                                         </p>
                                         <div class="d-flex flex-row justify-content-start mb-4">
-                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(deviceUdid, item.user[-10:], False, True) }}">
+                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(basePath, deviceUdid, item.user[-10:], False, True) }}">
                                             <div class="ms-3" style="border-radius: 27.3px;">
                                                 <div class="bg-image">
                                                     <div class="chatImage">
@@ -448,7 +447,7 @@
                                         {% endif %}
                                         </p>
                                         <div class="d-flex flex-row justify-content-start mb-4">
-                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(deviceUdid, item.user[-10:], False, True) }}">
+                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(basePath, deviceUdid, item.user[-10:], False, True) }}">
                                             <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
                                                 <p class="small mb-0">
                                                     <i class="fas fa-spinner"  style="color: #858796"></i>
@@ -502,7 +501,7 @@
                                         {% endif %}
                                         </p>
                                         <div class="d-flex flex-row justify-content-start mb-4">
-                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(deviceUdid, item.user[-10:], False, True) }}">
+                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(basePath, deviceUdid, item.user[-10:], False, True) }}">
                                             <div class="ms-3" style="border-radius: 27.3px;">
                                                 <div class="bg-image">
                                                     <div class="chatImage">
@@ -578,7 +577,7 @@
                                         {% endif %}
                                         </p>
                                         <div class="d-flex flex-row justify-content-start mb-4">
-                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(deviceUdid, item.user[-10:], False, True) }}">
+                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(basePath, deviceUdid, item.user[-10:], False, True) }}">
                                             <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
                                                 <p class="small mb-0">
                                                     <i class="fas fa-spinner"  style="color: #858796"></i>
@@ -638,7 +637,7 @@
                                         {% endif %}
                                         </p>
                                         <div class="d-flex flex-row justify-content-start mb-4">
-                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(deviceUdid, item.user[-10:], False, True) }}">
+                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(basePath, deviceUdid, item.user[-10:], False, True) }}">
                                             {% if item.mediaPath is not none %}
                                                 <a target="_blank" href="{{ '/assets/' + item.mediaPath }}">
                                                     <audio controls class="received" style="margin-left:17px" src="{{ '/assets/' + str(item.mediaPath) }}"></audio>
@@ -694,7 +693,7 @@
                                         {% endif %}
                                         </p>
                                         <div class="d-flex flex-row justify-content-start mb-4">
-                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(deviceUdid, item.user[-10:], False, True) }}">
+                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(basePath, deviceUdid, item.user[-10:], False, True) }}">
                                             <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
                                                 <p class="small mb-0">
                                                     <center><b>VCARD Contact</b></center>
@@ -769,7 +768,7 @@
                                         {% endif %}
                                         </p>
                                         <div class="d-flex flex-row justify-content-start mb-4">
-                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(deviceUdid, item.user[-10:], False, True) }}">
+                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(basePath, deviceUdid, item.user[-10:], False, True) }}">
                                             <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
                                                 <a class="btn btn-light btn-icon-split" role="button" href="https://www.google.com/maps/place/{{ item.latitudine }},{{ item.longitudine }}" target="_blank"><span class="text-black-50 icon"><i class="fas fa-map-marker-alt"></i></span><span class="text-dark text">Google Maps</span></a>
                                             </div>
@@ -817,7 +816,7 @@
                                         {% endif %}
                                         </p>
                                         <div class="d-flex flex-row justify-content-start mb-4">
-                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(deviceUdid, item.user[-10:], False, True) }}">
+                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(basePath, deviceUdid, item.user[-10:], False, True) }}">
                                             <div class="ms-3" style="border-radius: 27.3px;">
                                                 <div class="bg-image">
                                                     <div style="max-width:150px; width: 100%; margin-right: 17px">
@@ -885,7 +884,7 @@
                                         {% endif %}
                                         </p>
                                         <div class="d-flex flex-row justify-content-start mb-4">
-                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(deviceUdid, item.user[-10:], False, True) }}">
+                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(basePath, deviceUdid, item.user[-10:], False, True) }}">
                                             <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
                                                 <p class="small mb-0">
                                                     <i class="fas fa-link"  style="color: #858796"></i>
@@ -939,7 +938,7 @@
                                         {% endif %}
                                         </p>
                                         <div class="d-flex flex-row justify-content-start mb-4">
-                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(deviceUdid, item.user[-10:], False, True) }}">
+                                            <img style="border-radius: 50%; width: 45px; height: 100%" src="{{ GetMediaFromBackup(basePath, deviceUdid, item.user[-10:], False, True) }}">
                                             <div class="p-3 ms-3" style="border-radius: 27.3px; background-color: rgba(57, 192, 237,.2);">
                                                 <p class="small mb-0">
                                                     {% if item.fileExtension == 'pdf' %}

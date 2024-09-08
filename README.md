@@ -21,6 +21,17 @@ To start the Forensic Wace GUI, execute the command below in any terminal window
 forensic-wace-se
 ```
 
+Once the command to start the tool has been run on the server machine on which it will run, a web browser is needed to access the GUI. It is recommended to use Google Chrome as browser.
+
+### Homepage to select Device backup
+![Select Backup.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FGitHub%20Screen%2FSelect%20Backup.png)
+
+### Homepage after selecting Device backup
+![Homepage.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FGitHub%20Screen%2FHomepage.png)
+
+### Change logo
+![Change Logo.png](src%2FforensicWace_SE%2Fassets%2Fimg%2FGitHub%20Screen%2FChange%20Logo.png)
+
 ## Disclaimer
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

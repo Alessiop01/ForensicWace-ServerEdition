@@ -60,3 +60,8 @@ GroupListReport = "-GroupList"
 # Group notification status
 Enabled = "ENABLED"
 Disabled = "DISABLED"
+
+# Strings for report
+DeletedMessageInChatReport = "This message has been deleted by the sender"
+NotAssigned = 'Not Assigned'
+DatabaseOwner = 'Database Owner'

@@ -262,6 +262,27 @@ def PrivateChat():
                                    VcardTelExtractor = utils.VcardTelExtractor,
                                    basePath = basePath
                                    )
+
+
+@app.route('/ExportPrivateChat', methods=['POST'])
+def ExportPrivateChat():
+    # Retrieve remote hostId
+    clientId = request.remote_addr
+
+    if clientId not in hostsData:
+        return redirect(url_for('Index'))
+    else:
+        deviceUdid = hostsData[clientId]['udid']
+
+        phoneNumber = request.form['phoneNumber']
+        retrievedMessageType = request.form['messageType']
+        messageType = 0
+
+    if request.form['phoneNumber'] is None or request.form['phoneNumber'] == '':
+        return render_template('insertPhoneNumber.html', errorMsg=globalConstants.invalidPhoneNumberErrorMsg)
+
+    chatCounters, messages, errorMsg = extraction.GetPrivateChat(basePath, hostsData[clientId]['udid'], phoneNumber[
+                                                                                                        -10:])  # phoneNumber[-10:] --> Pass the last 10 characters inserted
 # endregion
 
 
@@ -500,6 +521,7 @@ def GroupChat():
                                )
 
 # endregion
+
 
 # region /DiscoverMore
 @app.route('/DiscoverMore')

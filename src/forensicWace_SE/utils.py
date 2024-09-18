@@ -204,3 +204,8 @@ def VcardTelExtractor(vcardText):
         phoneNumber = ["Number not available"]
 
     return phoneNumber
+
+def ConvertSeconds(seconds):
+    minutes = seconds // 60
+    missingSeconds = seconds % 60
+    return "{:02d}:{:02d}".format(minutes, missingSeconds)

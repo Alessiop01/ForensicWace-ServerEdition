@@ -326,72 +326,72 @@ def PrivateChatReport(udid, phoneNumber, extractedData):
         c.setFillColor(message_box_text_color)
 
         if mediaType == 1:
-            c.drawImage(basePath + "/src/icons/CameraNum.png" if chat['user'] is not None else basePath + "/src/icons/CameraUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
+            c.drawImage(basePath + "/assets/img/icons/CameraNum.png" if chat['user'] is not None else basePath + "/assets/img/icons/CameraUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
             y_offset -= 16
         elif mediaType == 2:
-            c.drawImage(basePath + "/src/icons/VideoNum.png" if chat['user'] is not None else basePath + "/src/icons/VideoUser.png",
+            c.drawImage(basePath + "/assets/img/icons/VideoNum.png" if chat['user'] is not None else basePath + "/assets/img/icons/VideoUser.png",
                 x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
-            c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6, utils.ConvertSeconds(chat['durata']))
+            c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6, utils.ConvertSeconds(chat['duration']))
             y_offset -= 16
         elif mediaType == 3:
-            c.drawImage(basePath + "/src/icons/MicNum.png" if chat['user'] is not None else basePath + "/src/icons/MicUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
+            c.drawImage(basePath + "/assets/img/icons/MicNum.png" if chat['user'] is not None else basePath + "/assets/img/icons/MicUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
-            c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6, utils.ConvertSeconds(chat['durata']))
+            c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6, utils.ConvertSeconds(chat['duration']))
             y_offset -= 16
         elif mediaType == 4:
-            c.drawImage(basePath + "/src/icons/ContactNum.png" if chat['user'] is not None else basePath + "/src/icons/ContactUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
+            c.drawImage(basePath + "/assets/img/icons/ContactNum.png" if chat['user'] is not None else basePath + "/assets/img/icons/ContactUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
             c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6, chat["ZPARTNERNAME"])
             y_offset -= 16
         elif mediaType == 5:
-            c.drawImage(basePath + "/src/icons/PositionNum.png" if chat['user'] is not None else basePath + "/src/icons/PositionUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
+            c.drawImage(basePath + "/assets/img/icons/PositionNum.png" if chat['user'] is not None else basePath + "/assets/img/icons/PositionUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
             c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6,
-                         str(chat['latitudine']) + " , " + str(chat["longitudine"]))
+                         str(chat['latitude']) + " , " + str(chat['longitude']))
             y_offset -= 16
         elif mediaType == 6:
-            c.drawImage( basePath + "/src/icons/GroupNum.png" if chat['user'] is not None else basePath + "/src/icons/GroupUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
+            c.drawImage( basePath + "/assets/img/icons/GroupNum.png" if chat['user'] is not None else basePath + "/assets/img/icons/GroupUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
             y_offset -= 16
         elif mediaType == 7:
-            c.drawImage(basePath + "/src/icons/LinkNum.png" if chat['user'] is not None else basePath + "/src/icons/LinkUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
+            c.drawImage(basePath + "/assets/img/icons/LinkNum.png" if chat['user'] is not None else basePath + "/assets/img/icons/LinkUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
             y_offset -= 16
         elif mediaType == 8:
-            c.drawImage(basePath + "/src/icons/DocNum.png" if chat['user'] is not None else basePath + "/src/icons/DocUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
+            c.drawImage(basePath + "/assets/img/icons/DocNum.png" if chat['user'] is not None else basePath + "/assets/img/icons/DocUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
             if chat["text"] != 'None':
                 c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6, chat['text'])
             y_offset -= 16
         elif mediaType == 11:
-            c.drawImage(basePath + "/src/icons/GifNum.png" if chat['user'] == 'Database owner' else basePath + "/src/icons/GifUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
+            c.drawImage(basePath + "/assets/img/icons/GifNum.png" if chat['user'] == 'Database owner' else basePath + "/assets/img/icons/GifUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
             c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6, "GIF")
             y_offset -= 16
         elif mediaType == 14:
-            c.drawImage(basePath + "/src/icons/BinNum.png" if chat['user'] is not None else basePath + "/src/icons/BinUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
+            c.drawImage(basePath + "/assets/img/icons/BinNum.png" if chat['user'] is not None else basePath + "/assets/img/icons/BinUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
             c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6, globalConstants.DeletedMessageInChatReport)
             y_offset -= 16
         elif mediaType == 15:
-            c.drawImage(basePath + "/src/icons/StickerNum.png" if chat['user'] is not None else basePath + "/src/icons/StickerUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
+            c.drawImage(basePath + "/assets/img/icons/StickerNum.png" if chat['user'] is not None else basePath + "/assets/img/icons/StickerUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
             c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6, "Sticker")
             y_offset -= 16
         elif mediaType == 38:
-            c.drawImage(basePath + "/src/icons/OneTimeNum.png" if chat['user'] is not None else basePath + "/src/icons/OneTimeUSer.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
+            c.drawImage(basePath + "/assets/img/icons/OneTimeNum.png" if chat['user'] is not None else basePath + "/assets/img/icons/OneTimeUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
             c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6, "Image")
             y_offset -= 16
         elif mediaType == 39:
-            c.drawImage(basePath + "/src/icons/OneTimeNum.png" if chat['user'] is not None else basePath + "/src/icons/OneTimeUSer.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
+            c.drawImage(basePath + "/assets/img/icons/OneTimeNum.png" if chat['user'] is not None else basePath + "/assets/img/icons/OneTimeUser.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
-            c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6, utils.ConvertSeconds(chat['durata']))
+            c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6, utils.ConvertSeconds(chat['duration']))
             y_offset -= 16
         elif mediaType == 46:
-            c.drawImage(basePath + "/src/icons/PollNum.png" if chat['user'] is not None else basePath + "/src/icons/PollUSer.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
+            c.drawImage(basePath + "/assets/img/icons/PollNum.png" if chat['user'] is not None else basePath + "/assets/img/icons/PollUSer.png", x_offset + 14, y_offset + message_box_height / 2 - 7, width=12, height=12)
             mediaType = -1
             c.drawString(x_offset + 32, y_offset + message_box_height / 2 - 6, "Poll")
             y_offset -= 16
@@ -420,18 +420,19 @@ def PrivateChatReport(udid, phoneNumber, extractedData):
 
         previousSender = chat['user']
 
+    print("prima di c.save()")
     # Save the PDF file
     c.save()
-
+    print("prima di doc.build(c, onFirstPage=CreateVerticalDocHeaderAndFooter, onLaterPages=CreateVerticalDocHeaderAndFooter)")
     # Build the output PDF file
-    doc.build(c, onFirstPage=CreateVerticalDocHeaderAndFooter, onLaterPages=CreateVerticalDocHeaderAndFooter)
-
+    #doc.build(c, onFirstPage=CreateVerticalDocHeaderAndFooter, onLaterPages=CreateVerticalDocHeaderAndFooter)
+    print("prima di buffer.seek(0)")
     # Move buffer to initial position
     buffer.seek(0)
 
     # Certificate the output report
     certificatedReportZip = certification.CertificateReportAndZipFiles(udid, buffer.getvalue(),
-                                                                       globalConstants.ChatListReport)
+                                                                       globalConstants.PrivateChat, phoneNumber)
 
     buffer.close()
 

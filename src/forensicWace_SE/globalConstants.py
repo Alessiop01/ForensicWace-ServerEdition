@@ -56,6 +56,7 @@ GpsDataReport = "-GpsLocations"
 ChatListReport = "-ChatList"
 BlockedContactsReport = "-BlockedContacts"
 GroupListReport = "-GroupList"
+PrivateChat = "-PrivateChat-"
 
 # Group notification status
 Enabled = "ENABLED"

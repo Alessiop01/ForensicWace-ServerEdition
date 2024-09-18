@@ -275,14 +275,15 @@ def ExportPrivateChat():
         deviceUdid = hostsData[clientId]['udid']
 
         phoneNumber = request.form['phoneNumber']
-        retrievedMessageType = request.form['messageType']
-        messageType = 0
 
     if request.form['phoneNumber'] is None or request.form['phoneNumber'] == '':
         return render_template('insertPhoneNumber.html', errorMsg=globalConstants.invalidPhoneNumberErrorMsg)
 
-    chatCounters, messages, errorMsg = extraction.GetPrivateChat(basePath, hostsData[clientId]['udid'], phoneNumber[
-                                                                                                        -10:])  # phoneNumber[-10:] --> Pass the last 10 characters inserted
+    chatCounters, messages, errorMsg = extraction.GetPrivateChat(basePath, hostsData[clientId]['udid'], phoneNumber[-10:])  # phoneNumber[-10:] --> Pass the last 10 characters inserted
+
+    generatedReportZip = reporting.PrivateChatReport(deviceUdid, phoneNumber, messages)
+
+    return send_file(generatedReportZip, as_attachment=True)
 # endregion
 
 

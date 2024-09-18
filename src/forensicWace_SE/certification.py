@@ -4,19 +4,28 @@ import zipfile
 import tempfile
 
 import forensicWace_SE.utils as utils
+import forensicWace_SE.globalConstants as globalConstants
 
 basePath = os.path.dirname(os.path.abspath(__file__)).replace('\\','/')
 
-def CertificateReportAndZipFiles(udid, tempReport, reportTypeExtension):
+def CertificateReportAndZipFiles(udid, tempReport, reportTypeExtension, phoneNumber = None):
     tempDir = tempfile.gettempdir()
 
-    reportName = udid + reportTypeExtension + ".pdf"
-    certificateName = udid + reportTypeExtension + ".tsr"
+    if(reportTypeExtension == globalConstants.PrivateChat):
+        reportName = udid + reportTypeExtension + phoneNumber + ".pdf"
+        certificateName = udid + reportTypeExtension + phoneNumber + ".tsr"
+    else:
+        reportName = udid + reportTypeExtension + ".pdf"
+        certificateName = udid + reportTypeExtension + ".tsr"
 
     reportPath = os.path.join(tempDir, reportName)
     certificatePath = os.path.join(tempDir, certificateName)
 
-    certificatedReportZipFileName = os.path.join(tempDir, udid + reportTypeExtension + ".zip")
+    if (reportTypeExtension == globalConstants.PrivateChat):
+        certificatedReportZipFileName = os.path.join(tempDir, udid + reportTypeExtension + phoneNumber + ".zip")
+    else:
+        certificatedReportZipFileName = os.path.join(tempDir, udid + reportTypeExtension + ".zip")
+
 
     filesToZip = [
         reportPath,

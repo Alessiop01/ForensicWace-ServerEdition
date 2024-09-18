@@ -30,7 +30,10 @@
             <div id="content">
                 <div class="container-fluid">
                     <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                        <h3 class="text-dark mb-0">Conversation with: <span style="font-weight: bold">{{ messages[0].ZPARTNERNAME }}</span></h3><a class="btn btn-primary btn-icon-split" href="" role="button"><span class="text-white-50 icon"><i class="fas fa-file-export"></i></span><span class="text-white text">EXPORT CHAT</span></a>
+                        <form id="exportPrivateChat" action="/ExportPrivateChat" method="post">
+                            <input class="border rounded-pill" type="tel" autofocus="" id="phoneNumber" name="phoneNumber" value="{{ unformattedPhoneNumber }}" style="display: None">
+                        </form>
+                        <h3 class="text-dark mb-0">Conversation with: <span style="font-weight: bold">{{ messages[0].ZPARTNERNAME }}</span></h3><a class="btn btn-primary btn-icon-split" onclick="document.getElementById('exportPrivateChat').submit();" style="cursor: pointer;"role="button"><span class="text-white-50 icon"><i class="fas fa-file-export"></i></span><span class="text-white text">EXPORT CHAT</span></a>
                     </div>
                     <div class="row">
                         <div class="col-md-6 col-xl-3 mb-4">

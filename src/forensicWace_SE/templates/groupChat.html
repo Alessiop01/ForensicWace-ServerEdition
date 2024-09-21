@@ -20,7 +20,7 @@
     {% if warningFilteredMsg %}
         <div class="row">
             <div class="col text-center">
-                <div class="alert alert-warning alert-dismissible mx-auto" role="alert" style="width: 90%;"><button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button><a class="btn btn-warning btn-circle ms-1" role="button" style="margin-right: 15px;padding-top: 0px;padding-bottom: 0px;"><i class="fas fa-exclamation-triangle text-white"></i></a><span style="font-size: 24px;"><strong>{{ warningFilteredMsg }}</strong><br /></span></div>
+                <div class="alert alert-warning alert-dismissible mx-auto" role="alert" style="width: 90%;"><button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button><a class="btn btn-warning btn-circle ms-1" style="cursor: pointer;" role="button" style="margin-right: 15px;padding-top: 0px;padding-bottom: 0px;"><i class="fas fa-exclamation-triangle text-white"></i></a><span style="font-size: 24px;"><strong>{{ warningFilteredMsg }}</strong><br /></span></div>
             </div>
         </div>
         <hr style="margin-top: 7px;margin-bottom: 13px;">
@@ -30,7 +30,10 @@
         <div id="content">
             <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                    <h3 class="text-dark mb-0">Conversation with: <span style="font-weight: bold">{{ groupName }}</span></h3><a class="btn btn-primary btn-icon-split" href="" role="button"><span class="text-white-50 icon"><i class="fas fa-file-export"></i></span><span class="text-white text">EXPORT CHAT</span></a>
+                    <form id="exportGroupChat" action="/ExportGroupChat" method="post">
+                        <input class="border rounded-pill" type="tel" autofocus="" id="groupName" name="groupName" value="{{ groupName }}" style="display: None">
+                    </form>
+                    <h3 class="text-dark mb-0">Conversation with: <span style="font-weight: bold">{{ groupName }}</span></h3><a class="btn btn-primary btn-icon-split" onclick="document.getElementById('exportGroupChat').submit();" role="button"><span class="text-white-50 icon"><i class="fas fa-file-export"></i></span><span class="text-white text">EXPORT CHAT</span></a>
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-xl-3 mb-4">
@@ -282,7 +285,7 @@
                                             <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
                                             </svg>
-                                            {{ item.receiveDateTime }}
+                                            {{ item.receiveDateTime }} UTC
                                         </p>
 
                                     {% elif item.user is none %}
@@ -337,7 +340,7 @@
                                             <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
                                             </svg>
-                                            {{ item.receiveDateTime }}
+                                            {{ item.receiveDateTime }} UTC
                                         </p>
 
                                     {% elif item.user is none %}
@@ -398,7 +401,7 @@
                                             <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
                                             </svg>
-                                            {{ item.receiveDateTime }}
+                                            {{ item.receiveDateTime }} UTC
                                         </p>
 
                                     {% elif item.user is none %}
@@ -459,7 +462,7 @@
                                             <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
                                             </svg>
-                                            {{ item.receiveDateTime }}
+                                            {{ item.receiveDateTime }} UTC
                                         </p>
 
                                     {% elif item.user is none %}
@@ -524,7 +527,7 @@
                                             <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
                                             </svg>
-                                            {{ item.receiveDateTime }}
+                                            {{ item.receiveDateTime }} UTC
                                         </p>
 
                                     {% elif item.user is none %}
@@ -592,7 +595,7 @@
                                             <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
                                             </svg>
-                                            {{ item.receiveDateTime }}
+                                            {{ item.receiveDateTime }} UTC
                                         </p>
 
                                     {% elif item.user is none %}
@@ -650,7 +653,7 @@
                                             <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
                                             </svg>
-                                            {{ item.receiveDateTime }}
+                                            {{ item.receiveDateTime }} UTC
                                         </p>
 
                                     {% elif item.user is none %}
@@ -710,7 +713,7 @@
                                             <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
                                             </svg>
-                                            {{ item.receiveDateTime }}
+                                            {{ item.receiveDateTime }} UTC
                                         </p>
 
                                     {% elif item.user is none %}
@@ -777,7 +780,7 @@
                                             <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
                                             </svg>
-                                            {{ item.receiveDateTime }}
+                                            {{ item.receiveDateTime }} UTC
                                         </p>
 
                                     {% elif item.user is none %}
@@ -835,7 +838,7 @@
                                             <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
                                             </svg>
-                                            {{ item.receiveDateTime }}
+                                            {{ item.receiveDateTime }} UTC
                                         </p>
 
                                     {% elif item.user is none %}
@@ -896,7 +899,7 @@
                                             <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
                                             </svg>
-                                            {{ item.receiveDateTime }}
+                                            {{ item.receiveDateTime }} UTC
                                         </p>
 
                                     {% elif item.user is none %}
@@ -962,7 +965,7 @@
                                             <svg class="bi bi-check-all text-primary fa-2x" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path>
                                             </svg>
-                                            {{ item.receiveDateTime }}
+                                            {{ item.receiveDateTime }} UTC
                                         </p>
 
                                     {% elif item.user is none %}

@@ -521,6 +521,27 @@ def GroupChat():
                                basePath = basePath
                                )
 
+
+@app.route('/ExportGroupChat', methods=['POST'])
+def ExportGroupChat():
+    # Retrieve remote hostId
+    clientId = request.remote_addr
+
+    if clientId not in hostsData:
+        return redirect(url_for('Index'))
+    else:
+        deviceUdid = hostsData[clientId]['udid']
+        groupName = request.form['groupName']
+
+    if request.form['groupName'] is None or request.form['groupName'] == '':
+        return render_template('selectGroup.html')
+
+    chatCounters, messages, errorMsg = extraction.GetGroupChat(basePath, deviceUdid, groupName)
+
+    generatedReportZip = reporting.GroupChatReport(deviceUdid, groupName, messages)
+
+    return send_file(generatedReportZip, as_attachment=True)
+
 # endregion
 
 

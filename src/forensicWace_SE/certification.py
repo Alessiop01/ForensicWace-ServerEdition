@@ -8,12 +8,15 @@ import forensicWace_SE.globalConstants as globalConstants
 
 basePath = os.path.dirname(os.path.abspath(__file__)).replace('\\','/')
 
-def CertificateReportAndZipFiles(udid, tempReport, reportTypeExtension, phoneNumber = None):
+def CertificateReportAndZipFiles(udid, tempReport, reportTypeExtension, phoneNumber = None, groupName = None):
     tempDir = tempfile.gettempdir()
 
     if(reportTypeExtension == globalConstants.PrivateChat):
         reportName = udid + reportTypeExtension + phoneNumber + ".pdf"
         certificateName = udid + reportTypeExtension + phoneNumber + ".tsr"
+    elif (reportTypeExtension == globalConstants.GroupChat):
+        reportName = udid + reportTypeExtension + groupName + ".pdf"
+        certificateName = udid + reportTypeExtension + groupName + ".tsr"
     else:
         reportName = udid + reportTypeExtension + ".pdf"
         certificateName = udid + reportTypeExtension + ".tsr"
@@ -23,6 +26,8 @@ def CertificateReportAndZipFiles(udid, tempReport, reportTypeExtension, phoneNum
 
     if (reportTypeExtension == globalConstants.PrivateChat):
         certificatedReportZipFileName = os.path.join(tempDir, udid + reportTypeExtension + phoneNumber + ".zip")
+    elif (reportTypeExtension == globalConstants.GroupChat):
+        certificatedReportZipFileName = os.path.join(tempDir, udid + reportTypeExtension + groupName + ".zip")
     else:
         certificatedReportZipFileName = os.path.join(tempDir, udid + reportTypeExtension + ".zip")
 

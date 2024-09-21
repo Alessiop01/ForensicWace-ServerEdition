@@ -13,6 +13,8 @@ WhatsAppDomain = 'AppDomainGroup-group.net.whatsapp.WhatsApp.shared'
 invalidPhoneNumber = "Invalid phone number"
 infoNotAvailable = "Information not available"
 notAvailable = "Not available"
+missingReport = "Please select a PDF report"
+missingCertificate = "Please select a TSR certificate"
 
 # Error messages
 invalidPhoneNumberErrorMsg = "The phone number you entered is INVALID, please try again"

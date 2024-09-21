@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, send_file
 
 import os
+import tempfile
 
 # Import Custom Modules
 import forensicWace_SE.extraction as extraction
@@ -16,6 +17,7 @@ basePath = os.path.dirname(os.path.abspath(__file__))
 # Configure each folder into the app
 app.config['deviceExtractions_FOLDER'] = os.path.join(basePath, globalConstants.deviceExtractions_FOLDER)
 app.config['assetsImage_FOLDER'] = os.path.join(basePath, globalConstants.assetsImage_FOLDER)
+app.config['systemTMP_FOLDER'] = tempfile.gettempdir()
 
 # Dictionary to store all the variables and data for each connected host
 hostsData = {}
@@ -542,6 +544,45 @@ def ExportGroupChat():
 
     return send_file(generatedReportZip, as_attachment=True)
 
+# endregion
+
+
+# region CheckReport
+@app.route('/CheckReport', methods=['GET', 'POST'])
+def CheckReport():
+    reportStatus = 0
+
+    if request.method == 'POST':
+        report = request.files['report']
+        if report:
+            # Create the file path and name
+            reportPath = os.path.join(app.config['systemTMP_FOLDER'], report.filename)
+            # Save the received file in the system TMP folder
+            report.save(reportPath)
+        else:
+            return render_template('checkReport.html',
+                                   reportStatus=None,
+                                   errorMessage = globalConstants.missingReport)
+
+        certificate = request.files['certificate']
+        if certificate:
+            # Create the file path and name
+            certificatePath = os.path.join(app.config['systemTMP_FOLDER'], certificate.filename)
+            # Save the received file in the system TMP folder
+            certificate.save(certificatePath)
+        else:
+            return render_template('checkReport.html',
+                                   reportStatus=None,
+                                   errorMessage=globalConstants.missingCertificate)
+
+        reportStatus = reporting.ReportCheckAuth(reportPath, certificatePath)
+
+        os.remove(reportPath)
+        os.remove(certificatePath)
+
+    return render_template('checkReport.html',
+                           reportStatus=reportStatus,
+                           errorMessage = None)
 # endregion
 
 

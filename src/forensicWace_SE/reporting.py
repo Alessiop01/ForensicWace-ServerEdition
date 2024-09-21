@@ -1,4 +1,5 @@
 import os
+import rfc3161ng
 
 import forensicWace_SE.utils as utils
 import forensicWace_SE.certification as certification
@@ -849,3 +850,17 @@ def GroupChatReport(udid, groupName, extractedData):
     print("before return")
     # Return generated file
     return certificatedReportZip
+
+def ReportCheckAuth(pathFile, pathCert):
+    certificate = open(basePath + "/assets/reportCertificate/tsa.crt", 'rb').read()
+    rt = rfc3161ng.RemoteTimestamper("https://freetsa.org/tsr", certificate=certificate, hashname='sha256')
+
+    timestamp = open(pathCert, 'rb').read()
+    verified = False
+    try:
+        verified = rt.check(timestamp, data=open(pathFile, 'rb').read())
+    except:
+        return -1
+
+    if verified:
+        return 1

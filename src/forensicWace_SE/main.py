@@ -76,7 +76,7 @@ def Index():
 # endregion
 
 
-# region /ChooseExtraction
+# region ChooseExtraction
 @app.route('/ChooseExtraction')
 def ChooseExtraction():
     """Adds the information about the selected extracted backup to the system dictionary for the hostId."""
@@ -89,7 +89,7 @@ def ChooseExtraction():
 # endregion
 
 
-# region /ChangeLogo
+# region ChangeLogo
 @app.route('/ChangeLogo', methods=['GET', 'POST'])
 def ChangeLogo():
     """Shows the page to upload a new logo for the tool.
@@ -105,7 +105,7 @@ def ChangeLogo():
 # endregion
 
 
-# region /Exit
+# region Exit
 @app.route('/Exit')
 def Exit():
     """Redirect the user to the index page to select a new backup extraction.
@@ -175,7 +175,7 @@ def InsertPhoneNumber():
 # endregion
 
 
-# region /PrivateChat
+# region PrivateChat
 @app.route('/PrivateChat', methods=['POST'])
 def PrivateChat():
     # Retrieve remote hostId
@@ -279,7 +279,7 @@ def ExportPrivateChat():
     if request.form['phoneNumber'] is None or request.form['phoneNumber'] == '':
         return render_template('insertPhoneNumber.html', errorMsg=globalConstants.invalidPhoneNumberErrorMsg)
 
-    chatCounters, messages, errorMsg = extraction.GetPrivateChat(basePath, hostsData[clientId]['udid'], phoneNumber[-10:])  # phoneNumber[-10:] --> Pass the last 10 characters inserted
+    chatCounters, messages, errorMsg = extraction.GetPrivateChat(basePath, deviceUdid, phoneNumber[-10:])  # phoneNumber[-10:] --> Pass the last 10 characters inserted
 
     generatedReportZip = reporting.PrivateChatReport(deviceUdid, phoneNumber, messages)
 
@@ -326,7 +326,7 @@ def ExportGpsLocations():
 # endregion
 
 
-# region /BlockedContacts
+# region BlockedContacts
 @app.route('/BlockedContacts')
 def BlockedContacts():
     # Retrieve remote hostId
@@ -364,7 +364,7 @@ def ExportBlockedContacts():
 # endregion
 
 
-# region /GroupList
+# region GroupList
 @app.route('/GroupList')
 def GroupList():
     errorMsg = None
@@ -413,7 +413,7 @@ def ExportGroupList():
 # endregion
 
 
-# region /SelectGroup
+# region SelectGroup
 @app.route('/SelectGroup')
 def SelectGroup():
     errorMsg = None
@@ -443,7 +443,7 @@ def SelectGroup():
 # endregion
 
 
-# region /GroupChat
+# region GroupChat
 @app.route('/GroupChat', methods=['POST'])
 def GroupChat():
     # Retrieve remote hostId
@@ -524,7 +524,7 @@ def GroupChat():
 # endregion
 
 
-# region /DiscoverMore
+# region DiscoverMore
 @app.route('/DiscoverMore')
 def DiscoverMore():
     return render_template('discoverMore.html')

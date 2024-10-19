@@ -7,6 +7,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: GNU Affero General Public License v3 (AGPLv3)",
     "Operating System :: Windows",
+    "Operating System :: POSIX :: Linux"
 ]
 version = "1.0.0"
 
